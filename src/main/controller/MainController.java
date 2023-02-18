@@ -2,9 +2,15 @@ package main.controller;
 
 import main.business_logic.DefaultLogic;
 import main.controller.course.CourseController;
+import main.ui.MAIN;
 import main.ui.course.COURSE;
 
 public class MainController {
+
+    public static void initializeMainMenu () {
+        System.out.print(MAIN.MAIN_MENU);
+        handleInitialMainMenuInput();
+    }
     public static void handleInitialMainMenuInput() {
 
         try {

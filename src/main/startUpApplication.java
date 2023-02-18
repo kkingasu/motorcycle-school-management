@@ -10,14 +10,15 @@ import java.util.Scanner;
 
 public class startUpApplication {
     public static Scanner scanner;
+
+    public static Connection connection;
     public static void main(String[] args) {
-        // Initializing global scanner
+        // Global scanner
         scanner = new Scanner(System.in);
         // Initialize DB
-        // Connection connection = Database.connectToDatabase();
+        connection = Database.connectToDatabase();
         // Initialize Main menu
-        System.out.print(MAIN.MAIN_MENU);
-        MainController.handleInitialMainMenuInput();
+        MainController.initializeMainMenu();
         scanner.close();
     }
 }
