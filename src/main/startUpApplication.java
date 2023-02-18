@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class startUpApplication {
     public static Scanner scanner;
     public static void main(String[] args) {
-        // Global scanner
+        // Initializing global scanner
         scanner = new Scanner(System.in);
         // Initialize DB
         // Connection connection = Database.connectToDatabase();
