@@ -11,4 +11,8 @@ public class DefaultLogic {
         input = startUpApplication.scanner.nextLine();
         return input;
     }
+
+    public static int convertStringToInteger(String input) {
+        return Integer.parseInt(input);
+    }
 }
