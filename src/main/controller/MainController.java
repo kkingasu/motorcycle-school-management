@@ -2,8 +2,10 @@ package main.controller;
 
 import main.business_logic.DefaultLogic;
 import main.controller.course.CourseController;
+import main.controller.infrastructure.InfrastructureController;
 import main.ui.MAIN;
 import main.ui.course.COURSE;
+import main.ui.infrastructure.INFRASTRUCTURE;
 
 public class MainController {
 
@@ -34,6 +36,10 @@ public class MainController {
                 case 4: // Staff
                     break;
                 case 5: // Infrastructure
+                    // print menu
+                    System.out.print(INFRASTRUCTURE.MAIN_MENU);
+                    // print menu logic
+                    InfrastructureController.infrastructureMenu();
                     break;
                 default:
                     // return to main menu

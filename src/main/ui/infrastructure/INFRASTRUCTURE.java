@@ -12,18 +12,18 @@ public class INFRASTRUCTURE {
             + "Classroom Management\n"
             + "====================================================================\n"
             + "1. Create a Classroom\n"
-            + "2. Display a List of Classrooms\n"
-            + "3. Update a Classrooms\n"
-            + "4. Delete a Classrooms\n"
+            + "2. Display List of Classrooms\n"
+            + "3. Update Classroom\n"
+            + "4. Delete Classroom\n"
             + "Input a number value to select an option from above: ";
 
     public final static String MANAGE_RANGES = "====================================================================\n"
             + "Classroom Management\n"
             + "====================================================================\n"
-            + "1. Create a Classroom\n"
-            + "2. Display a List of Classrooms\n"
-            + "3. Update a Classrooms\n"
-            + "4. Delete a Classrooms\n"
+            + "1. Create a Range\n"
+            + "2. Display List of Ranges\n"
+            + "3. Update Range\n"
+            + "4. Delete Range\n"
             + "Input a number value to select an option from above: ";
 
     public final static String CREATE_CLASSROOM = "====================================================================\n"
@@ -58,22 +58,3 @@ public class INFRASTRUCTURE {
             + "Delete Range\n"
             + "====================================================================";
 }
-//
-//package main.ui.course;
-//
-//public class COURSE {
-//    public final static String MAIN_MENU = "====================================================================\n"
-//            + "Course Management\n"
-//            + "====================================================================\n"
-//            + "1. Create Course\n"
-//            + "2. Assign Teacher\n"
-//            + "3. Assign Range\n"
-//            + "4. Assign Class\n"
-//            + "5. Return to Main Menu\n"
-//            + "Input a number value to select an option from above: ";
-//
-//    public final static String CREATE_COURSE = "====================================================================\n"
-//            + "Create New Course\n"
-//            + "====================================================================";
-//}
-//
