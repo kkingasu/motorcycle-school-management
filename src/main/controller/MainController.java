@@ -2,7 +2,9 @@ package main.controller;
 
 import main.business_logic.DefaultLogic;
 import main.controller.course.CourseController;
+import main.controller.garage.GarageController;
 import main.ui.course.COURSE;
+import main.ui.garage.GARAGE;
 
 public class MainController {
     public static void handleInitialMainMenuInput() {
@@ -24,6 +26,10 @@ public class MainController {
                 case 2: // Student
                     break;
                 case 3: // Garage
+                    //Print menu
+                    System.out.print(GARAGE.MAIN_MENU);
+                    //print menu logic
+                    GarageController.garageMenu();
                     break;
                 case 4: // Staff
                     break;
