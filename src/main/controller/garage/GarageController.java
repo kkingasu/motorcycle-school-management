@@ -8,13 +8,13 @@ import main.ui.MAIN;
 import main.ui.garage.GARAGE;
 import main.models.garage.BikeModel;
 import main.models.garage.RepairModel;
-
-import java.sql.SQLOutput;
-import java.util.Date;
+import java.sql.Date;
 
 public class GarageController {
     //================================MENUS================================
     public static void garageMenu() {
+
+        System.out.print(GARAGE.MAIN_MENU);
         try
         {
             String input = DefaultLogic.handleInput();
@@ -22,12 +22,12 @@ public class GarageController {
             switch(inputConvertedToInteger) {
                 case 1: // Manage Bikes
                     // Print Manage Bikes Menu
-                    System.out.println(GARAGE.MANGAGE_BIKES_MENU);
+                    System.out.print(GARAGE.MANGAGE_BIKES_MENU);
                     manageBikesMenu();
                     break;
                 case 2: // Manage Bike Maintenance
                     //Print Manage Bike Maintenance Menu
-                    System.out.println(GARAGE.MANAGE_BIKE_MAINTENANCE_MENU);
+                    System.out.print(GARAGE.MANAGE_BIKE_MAINTENANCE_MENU);
                     manageBikeMaintenanceMenu();
                     break;
                 default:
@@ -50,23 +50,26 @@ public class GarageController {
             switch(inputConvertedToInteger) {
                 case 1: // View Available Bikes
                     // Print Available Bikes Menu
-                    System.out.println(GARAGE.AVAILABLE_BIKES_MENU);
+                    System.out.print(GARAGE.AVAILABLE_BIKES_MENU);
                     availableBikesMenu();
                     break;
                 case 2: // Assign Bike to Course
+                    System.out.print(GARAGE.ASSIGN_BIKE_COURSE);
                     handleAssignBikeToCourse();
                     break;
                 case 3: // Remove Bike from Course
+                    System.out.print(GARAGE.REMOVE_BIKE_COURSE);
                     handleRemoveBikeFromCourse();
                     break;
                 case 4: // Add New Bike to Garage
+                    System.out.print(GARAGE.ADD_BIKE_GARAGE);
                     handleAddNewBikeToGarage();
                     break;
                 case 5: // Remove Bike from Garage
+                    System.out.print(GARAGE.REMOVE_BIKE_GARAGE);
                     handleRemoveBikeFromGarage();
                     break;
                 case 6: // Go back to Garage Menu
-                    System.out.println(GARAGE.MAIN_MENU);
                     garageMenu();
                     break;
                 default:
@@ -88,16 +91,19 @@ public class GarageController {
             int inputConvertedToInteger = Integer.parseInt(input);
             switch(inputConvertedToInteger) {
                 case 1: // Total Available Bike Report
+                    System.out.print(GARAGE.TOTAL_AVAILABLE_BIKES);
                     handleTotalAvailableBikeReport();
                     break;
                 case 2: // Available Street Bike Report
+                    System.out.print(GARAGE.TOTAL_AVAILABLE_STREET_BIKES);
                     handleTotalAvailableStreetBikeReport();
                     break;
                 case 3: // Available Dirt Bike Report
+                    System.out.print(GARAGE.TOTAL_AVAILABLE_DIRT_BIKES);
                     handleTotalAvailableDirtBikeReport();
                     break;
                 case 4: // Return to Manage Bikes Menu
-                    System.out.println(GARAGE.MANGAGE_BIKES_MENU);
+                    System.out.print(GARAGE.MANGAGE_BIKES_MENU);
                     manageBikesMenu();
                     break;
                 default:
@@ -119,21 +125,23 @@ public class GarageController {
             int inputConvertedToInteger = Integer.parseInt(input);
             switch(inputConvertedToInteger) {
                 case 1: // Submit Work Order
+                    System.out.print(GARAGE.SUBMIT_WORK_ORDER);
                     handleSubmitWorkOrder();
                     break;
                 case 2: // Complete Work Order
+                    System.out.print(GARAGE.COMPLETE_WORK_ORDER);
                     handleCompleteWorkOrder();
                     break;
                 case 3: // View Total Active Work Orders Report
+                    System.out.print(GARAGE.TOTAL_ACTIVE_WORK_ORDERS);
                     handleViewTotalWorkOrders();
                     break;
                 case 4: // View Closed Work Order Reports
                     // Print Closed Work Order Menu
-                    System.out.println(GARAGE.CLOSED_WORK_ORDER_MENU);
+                    System.out.print(GARAGE.CLOSED_WORK_ORDER_MENU);
                     closedWorkOrderMenu();
                     break;
                 case 5: //Return to Garage Menu
-                    System.out.println(GARAGE.MAIN_MENU);
                     garageMenu();
                     break;
                 default:
@@ -155,13 +163,15 @@ public class GarageController {
             int inputConvertedToInteger = Integer.parseInt(input);
             switch(inputConvertedToInteger) {
                 case 1: // Total Closed Work Order Report
+                    System.out.print(GARAGE.TOTAL_CLOSED_WORK_ORDERS);
                     handleViewTotalClosedWorkOrders();
                     break;
                 case 2: // Individual Bike Work Order Report
+                    System.out.print(GARAGE.INDIVIDUAL_BIKE_REPORT);
                     handleIndividualBikeReport();
                     break;
                 case 3: // Return to Manage Bike Maintenance Menu
-                    System.out.println(GARAGE.MANAGE_BIKE_MAINTENANCE_MENU);
+                    System.out.print(GARAGE.MANAGE_BIKE_MAINTENANCE_MENU);
                     manageBikeMaintenanceMenu();
                 default:
                     // Return back to Main Menu
@@ -235,7 +245,7 @@ public class GarageController {
     }
 
     public static void handleTotalAvailableDirtBikeReport() {
-        GarageDatabaseLogic.retrieveAvailableStreetBikes();
+        GarageDatabaseLogic.retrieveAvailableDirtBikes();
         GarageController.garageMenu();
     }
 
