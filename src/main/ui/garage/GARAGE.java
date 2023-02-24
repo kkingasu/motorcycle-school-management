@@ -8,7 +8,6 @@ public class GARAGE {
             + "2. Manage Bike Maintenance\n"
             + "3. Return to Main Menu\n"
             + "Input a number value to select an option from above: ";
-
     public final static String MANGAGE_BIKES_MENU = "====================================================================\n"
             + "Manage Bikes\n"
             + "====================================================================\n"
@@ -46,4 +45,52 @@ public class GARAGE {
             + "2. Individual Bike Work Order Report\n"
             + "3. Return to Manage Bike Maintenance Menu\n"
             + "Input a number value to select an option from above: ";
+
+    public final static String ASSIGN_BIKE_COURSE = "====================================================================\n"
+            + "Assign a Bike to a Course\n"
+            + "====================================================================\n";
+
+    public final static String REMOVE_BIKE_COURSE = "====================================================================\n"
+            + "Remove a Bike from a Course\n"
+            + "====================================================================\n";
+
+    public final static String ADD_BIKE_GARAGE = "====================================================================\n"
+            + "Add a Bike to the Garage\n"
+            + "====================================================================\n";
+
+    public final static String REMOVE_BIKE_GARAGE = "====================================================================\n"
+            + "Remove a Bike from a Garage\n"
+            + "====================================================================\n";
+
+    public final static String TOTAL_AVAILABLE_BIKES = "====================================================================\n"
+            + "Total Available Bike Report\n"
+            + "====================================================================\n";
+
+    public final static String TOTAL_AVAILABLE_STREET_BIKES = "====================================================================\n"
+            + "Total Available Street Bikes Report\n"
+            + "====================================================================\n";
+
+    public final static String TOTAL_AVAILABLE_DIRT_BIKES = "====================================================================\n"
+            + "Total Available Dirt Bikes Report\n"
+            + "====================================================================\n";
+
+    public final static String SUBMIT_WORK_ORDER = "====================================================================\n"
+            + "Create a Work Order\n"
+            + "====================================================================\n";
+
+    public final static String COMPLETE_WORK_ORDER = "====================================================================\n"
+            + "Complete a Work Order\n"
+            + "====================================================================\n";
+
+    public final static String TOTAL_ACTIVE_WORK_ORDERS = "====================================================================\n"
+            + "Total Active Work Orders Report\n"
+            + "====================================================================\n";
+
+    public final static String TOTAL_CLOSED_WORK_ORDERS = "====================================================================\n"
+            + "Total Closed Work Orders Report\n"
+            + "====================================================================\n";
+
+    public final static String INDIVIDUAL_BIKE_REPORT = "====================================================================\n"
+            + "Search For Bike Work Orders\n"
+            + "====================================================================\n";
 }
