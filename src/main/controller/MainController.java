@@ -26,8 +26,6 @@ public class MainController {
                 case 2: // Student
                     break;
                 case 3: // Garage
-                    //Print menu
-                    System.out.print(GARAGE.MAIN_MENU);
                     //print menu logic
                     GarageController.garageMenu();
                     break;
