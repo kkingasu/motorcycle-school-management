@@ -6,6 +6,7 @@ public class INFRASTRUCTURE {
             + "====================================================================\n"
             + "1. Manage Classrooms\n"
             + "2. Manage Ranges\n"
+            + "3. Return to Main Menu\n"
             + "Input a number value to select an option from above: ";
 
     public final static String MANAGE_CLASSROOMS = "====================================================================\n"
@@ -15,15 +16,17 @@ public class INFRASTRUCTURE {
             + "2. Display List of Classrooms\n"
             + "3. Update Classroom\n"
             + "4. Delete Classroom\n"
+            + "5. Return to Infrastructure Management\n"
             + "Input a number value to select an option from above: ";
 
     public final static String MANAGE_RANGES = "====================================================================\n"
-            + "Classroom Management\n"
+            + "Range Management\n"
             + "====================================================================\n"
             + "1. Create a Range\n"
             + "2. Display List of Ranges\n"
             + "3. Update Range\n"
             + "4. Delete Range\n"
+            + "5. Return to Infrastructure Management\n"
             + "Input a number value to select an option from above: ";
 
     public final static String CREATE_CLASSROOM = "====================================================================\n"

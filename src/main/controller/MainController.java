@@ -37,7 +37,7 @@ public class MainController {
                     break;
                 case 5: // Infrastructure
                     // print menu
-                    System.out.print(INFRASTRUCTURE.MAIN_MENU);
+
                     // print menu logic
                     InfrastructureController.infrastructureMenu();
                     break;

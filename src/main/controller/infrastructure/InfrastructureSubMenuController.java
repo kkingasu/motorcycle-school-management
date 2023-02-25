@@ -9,29 +9,25 @@ import main.ui.infrastructure.INFRASTRUCTURE;
 
 public class InfrastructureSubMenuController {
     public static void infrastructureClassroomSubMenu() {
+        System.out.print(INFRASTRUCTURE.MANAGE_CLASSROOMS);
         try {
             String input = DefaultLogic.handleInput();
             int inputConvertedToInteger = DefaultLogic.convertStringToInteger(input);
             switch (inputConvertedToInteger) {
                 case 1: // Create Classroom
-                    // Print create classrooms menu
-                    System.out.println(INFRASTRUCTURE.CREATE_CLASSROOM);
                     handleCreateClassroomInput();
                     break;
                 case 2: // Display all Classroom
-                    // Print all classrooms menu
-                    System.out.println(INFRASTRUCTURE.DISPLAY_CLASSROOM);
                     handleDisplayClassroomsInput();
                     break;
                 case 3: // Update Classroom
-                    // Print update classroom menu
-                    System.out.println(INFRASTRUCTURE.UPDATE_CLASSROOM);
                     handleUpdateClassroomInput();
                     break;
                 case 4: // Delete Classroom
-                    // Print delete classroom menu
-                    System.out.println(INFRASTRUCTURE.DELETE_CLASSROOM);
                     handleDeleteClassroomInput();
+                    break;
+                case 5: // Return to Infrastructure Menu
+                    InfrastructureController.infrastructureMenu();
                     break;
                 default: //
             }
@@ -40,31 +36,27 @@ public class InfrastructureSubMenuController {
         }
     }
     public static void infrastructureRangeSubMenu() {
+        System.out.print(INFRASTRUCTURE.MANAGE_RANGES);
         try {
             String input = DefaultLogic.handleInput();
             int inputConvertedToInteger = DefaultLogic.convertStringToInteger(input);
             switch (inputConvertedToInteger) {
                 case 1: // Create Range
-                    // Print create range menu
-                    System.out.println(INFRASTRUCTURE.CREATE_RANGE);
                     handleCreateRangeInput();
                     break;
                 case 2: // Display all Range
-                    // Print all ranges menu
-                    System.out.println(INFRASTRUCTURE.DISPLAY_RANGE);
                     handleDisplayRangesInput();
                     break;
                 case 3: // Update Range
-                    // Print update range menu
-                    System.out.println(INFRASTRUCTURE.UPDATE_RANGE);
                     handleUpdateRangeInput();
                     break;
                 case 4: // Delete Range
-                    // Print delete range menu
-                    System.out.println(INFRASTRUCTURE.DELETE_RANGE);
                     handleDeleteRangeInput();
                     break;
-                default: //
+                case 5: // Return to Infrastructure Menu
+                    InfrastructureController.infrastructureMenu();
+                    break;
+                default:
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,6 +64,7 @@ public class InfrastructureSubMenuController {
     }
 
     public static void handleCreateClassroomInput() {
+        System.out.println(INFRASTRUCTURE.CREATE_CLASSROOM);
         InfrastructureClassroomModel classroomModel = new InfrastructureClassroomModel();
         System.out.print("Enter Classroom Id:");
         classroomModel.setClassroom_id(DefaultLogic.handleInput());
@@ -82,11 +75,13 @@ public class InfrastructureSubMenuController {
     }
 
     public static void handleDisplayClassroomsInput() {
+        System.out.println(INFRASTRUCTURE.DISPLAY_CLASSROOM);
         InfrastructureDatabaseLogic.submitDisplayAllClassroomDataToDatabase();
         MainController.initializeMainMenu();
     }
 
     public static void handleUpdateClassroomInput() {
+        System.out.println(INFRASTRUCTURE.UPDATE_CLASSROOM);
         InfrastructureClassroomModel classroomModel = new InfrastructureClassroomModel();
         System.out.print("Enter Classroom Id:");
         classroomModel.setClassroom_id(DefaultLogic.handleInput());
@@ -97,6 +92,7 @@ public class InfrastructureSubMenuController {
     }
 
     public static void handleDeleteClassroomInput() {
+        System.out.println(INFRASTRUCTURE.DELETE_CLASSROOM);
         InfrastructureClassroomModel classroomModel = new InfrastructureClassroomModel();
         System.out.print("Enter Classroom Id:");
         classroomModel.setClassroom_id(DefaultLogic.handleInput());
@@ -105,36 +101,40 @@ public class InfrastructureSubMenuController {
     }
 
     public static void handleCreateRangeInput() {
+        System.out.println(INFRASTRUCTURE.CREATE_RANGE);
         InfrastructureRangeModel rangeModel = new InfrastructureRangeModel();
         System.out.print("Enter Classroom Id:");
         rangeModel.setRange_number(DefaultLogic.convertStringToInteger(DefaultLogic.handleInput()));
         System.out.print("Enter Classroom Availability (Y/N):");
         rangeModel.setIs_available(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
         InfrastructureDatabaseLogic.submitCreateRangeDataToDatabase(rangeModel);
-        MainController.initializeMainMenu();
+        InfrastructureSubMenuController.infrastructureRangeSubMenu();
     }
 
     public static void handleDisplayRangesInput() {
+        System.out.println(INFRASTRUCTURE.DISPLAY_RANGE);
         InfrastructureDatabaseLogic.submitDisplayAllRangeDataToDatabase();
-        MainController.initializeMainMenu();
+        InfrastructureSubMenuController.infrastructureRangeSubMenu();
     }
 
     public static void handleUpdateRangeInput() {
+        System.out.println(INFRASTRUCTURE.UPDATE_RANGE);
         InfrastructureRangeModel rangeModel = new InfrastructureRangeModel();
-        System.out.print("Enter Classroom Id:");
+        System.out.print("Enter Range Id:");
         rangeModel.setRange_number(DefaultLogic.convertStringToInteger(DefaultLogic.handleInput()));
-        System.out.print("Enter Classroom Availability (Y/N):");
+        System.out.print("Enter Range Availability (Y/N):");
         rangeModel.setIs_available(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
         InfrastructureDatabaseLogic.submitUpdateRangeDataToDatabase(rangeModel);
-        MainController.initializeMainMenu();
+        InfrastructureSubMenuController.infrastructureRangeSubMenu();
     }
 
     public static void handleDeleteRangeInput() {
+        System.out.println(INFRASTRUCTURE.DELETE_RANGE);
         InfrastructureRangeModel rangeModel = new InfrastructureRangeModel();
-        System.out.print("Enter Classroom Id:");
+        System.out.print("Enter Range Id:");
         rangeModel.setRange_number(DefaultLogic.convertStringToInteger(DefaultLogic.handleInput()));
         InfrastructureDatabaseLogic.submitDeleteRangeDataToDatabase(rangeModel);
-        MainController.initializeMainMenu();
+        InfrastructureSubMenuController.infrastructureRangeSubMenu();
     }
 
 }

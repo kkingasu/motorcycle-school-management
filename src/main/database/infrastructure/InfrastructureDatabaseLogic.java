@@ -1,4 +1,5 @@
 package main.database.infrastructure;
+import main.database.SQLPrinter;
 import main.models.infrastructure.InfrastructureClassroomModel;
 import main.models.infrastructure.InfrastructureRangeModel;
 import main.startUpApplication;
@@ -21,44 +22,27 @@ public class InfrastructureDatabaseLogic {
             preparedStatement.setString(1, classroomModel.getClassroom_id());
             preparedStatement.setBoolean(2, classroomModel.getIs_available());
             preparedStatement.executeUpdate();
+            System.out.println("Submitted Classroom Data.");
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("Log: FAILED - Create course : submitCreateClassroomDataToDatabase().");
         }
-        System.out.println("Submitting Course Data......");
     }
 
     public static void submitDisplayAllClassroomDataToDatabase() {
         try {
             final String query =    "SELECT *  FROM classroom C";
-//            final String query =    "SELECT * " +
-//                                    "FROM classroom C" +
-//                                    "ORDER BY C.classroom_id ASC";
             final Statement stmt = connection.createStatement();
             final ResultSet rs = stmt.executeQuery(query);
 
-            // Get database metadata
-            ResultSetMetaData metaData = rs.getMetaData();
-            int numColumns = metaData.getColumnCount();
             if (rs != null) {
-                System.out.print(formatOutput("classroom_id") + spacePipe);
-                System.out.print(formatOutput("is_available") + spacePipe);
-                System.out.println("\n-----------------------------------------");
-                while(rs.next()){
-                    String resultSetClassroomID = rs.getString("classroom_id");
-                    String resultSetIsAvailable = rs.getString("is_available");
-                    System.out.print(formatOutput(resultSetClassroomID) + spacePipe);
-                    System.out.print(formatOutput(resultSetIsAvailable) + spacePipe);
-                    System.out.println();
-                }
-                System.out.println("\n-----------------------------------------");
+                SQLPrinter.printResultSet(rs);
             }
 
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("Log: FAILED - Create course : submitDisplayAllClassroomDataToDatabase().");
         }
-        System.out.println("Displaying Classroom Data......");
     }
 
     public static void submitUpdateClassroomDataToDatabase(InfrastructureClassroomModel classroomModel) {
@@ -70,11 +54,11 @@ public class InfrastructureDatabaseLogic {
             preparedStatement.setBoolean(1, classroomModel.getIs_available());
             preparedStatement.setString(2, classroomModel.getClassroom_id());
             preparedStatement.executeUpdate();
+            System.out.println("Submitted Classroom Data.");
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("Log: FAILED - Create course : submitUpdateClassroomDataToDatabase().");
         }
-        System.out.println("Submitting Course Data......");
     }
 
     public static void submitDeleteClassroomDataToDatabase(InfrastructureClassroomModel classroomModel) {
@@ -83,11 +67,11 @@ public class InfrastructureDatabaseLogic {
             final PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, classroomModel.getClassroom_id());
             preparedStatement.executeUpdate();
+            System.out.println("Deleted Course Data.");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Log: FAILED - Create course : submitDeleteClassroomDataToDatabase().");
         }
-        System.out.println("Deleting Course Data......");
     }
 
     public static void submitCreateRangeDataToDatabase(InfrastructureRangeModel rangeModel) {
@@ -100,11 +84,11 @@ public class InfrastructureDatabaseLogic {
             preparedStatement.setInt(1, rangeModel.getRange_number());
             preparedStatement.setBoolean(2, rangeModel.getIs_available());
             preparedStatement.executeUpdate();
+            System.out.println("Submitted Range Data.");
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("Log: FAILED - Create course : submitCreateRangeDataToDatabase().");
         }
-        System.out.println("Submitting Range Data......");
     }
 
     public static void submitDisplayAllRangeDataToDatabase() {
@@ -113,28 +97,14 @@ public class InfrastructureDatabaseLogic {
             final Statement stmt = connection.createStatement();
             final ResultSet rs = stmt.executeQuery(query);
 
-            // Get database metadata
-            ResultSetMetaData metaData = rs.getMetaData();
-            int numColumns = metaData.getColumnCount();
             if (rs != null) {
-                System.out.print(formatOutput("range_number") + spacePipe);
-                System.out.print(formatOutput("is_available") + spacePipe);
-                System.out.println("\n-----------------------------------------");
-                while(rs.next()){
-                    String resultSetRangeNumber = rs.getString("range_number");
-                    String resultSetIsAvailable = rs.getString("is_available");
-                    System.out.print(formatOutput(resultSetRangeNumber) + spacePipe);
-                    System.out.print(formatOutput(resultSetIsAvailable) + spacePipe);
-                    System.out.println();
-                }
-                System.out.println("\n-----------------------------------------");
+                SQLPrinter.printResultSet(rs);
             }
 
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("Log: FAILED - Create course : submitDisplayAllRangeDataToDatabase().");
         }
-        System.out.println("Displaying Range Data......");
     }
 
     public static void submitUpdateRangeDataToDatabase(InfrastructureRangeModel rangeModel) {
@@ -146,11 +116,11 @@ public class InfrastructureDatabaseLogic {
             preparedStatement.setBoolean(1, rangeModel.getIs_available());
             preparedStatement.setInt(2, rangeModel.getRange_number());
             preparedStatement.executeUpdate();
+            System.out.println("Submitted Range Data.");
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("Log: FAILED - Create course : submitUpdateRangeDataToDatabase().");
         }
-        System.out.println("Submitting Range Data......");
     }
 
     public static void submitDeleteRangeDataToDatabase(InfrastructureRangeModel rangeModel) {

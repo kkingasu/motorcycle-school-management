@@ -8,17 +8,17 @@ public class DefaultLogic {
 
     // This handles all user input
     public static String handleInput(){
-        String input = "";
+        String input;
         input = startUpApplication.scanner.nextLine();
-        return input;
+        return input.trim();
     }
 
     public static int convertStringToInteger(String input) {
-        return Integer.parseInt(input);
+        return Integer.parseInt(input.trim());
     }
 
     public static Boolean convertStringToBoolean(String input) {
-        if (input.equals("Y") || input.equals("y")) {
+        if (input.toLowerCase().equals("y")) {
             return true;
         } else {
             return false;
