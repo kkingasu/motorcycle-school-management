@@ -2,8 +2,10 @@ package main.controller;
 
 import main.business_logic.DefaultLogic;
 import main.controller.course.CourseController;
+import main.controller.student.StudentController;
 import main.ui.MAIN;
 import main.ui.course.COURSE;
+import main.ui.student.STUDENT;
 
 public class MainController {
 
@@ -28,6 +30,8 @@ public class MainController {
                     CourseController.courseMenu();
                     break;
                 case 2: // Student
+                    System.out.print(STUDENT.MAIN_MENU);
+                    StudentController.studentMenu();
                     break;
                 case 3: // Garage
                     break;
