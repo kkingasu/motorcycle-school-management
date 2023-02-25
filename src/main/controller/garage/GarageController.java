@@ -9,6 +9,7 @@ import main.ui.garage.GARAGE;
 import main.models.garage.BikeModel;
 import main.models.garage.RepairModel;
 import java.sql.Date;
+import java.sql.SQLException;
 
 public class GarageController {
     //================================MENUS================================
@@ -264,10 +265,9 @@ public class GarageController {
         while (dateFormat == null) {
             try {
                 dateFormat = ValidationLogic.validateDateInput(dateInput);
-            }catch (Exception e) {
-                System.out.print("Try again, please use format(yyyy-MM-dd):");
+            } catch (ValidationLogic.InvalidDateFormatException e) {
+                System.out.print("Try again, " + e.getMessage());
                 dateInput = DefaultLogic.handleInput();
-                dateFormat = ValidationLogic.validateDateInput(dateInput);
             }
         }
         repair.setProblemDate(dateFormat);
@@ -277,10 +277,16 @@ public class GarageController {
         System.out.print("Enter short description of the problem: ");
         repair.setProblemDesc(DefaultLogic.handleInput());
 
-        GarageDatabaseLogic.submitWorkOrderToDatabase(repair);
-        GarageDatabaseLogic.assignBikeToWorkOrder(repair.getVIN(), repair.getRepairID());
-        GarageDatabaseLogic.setBikeOperationalStatus(repair.getVIN(), repair.getOperationalStatus());
-        GarageController.garageMenu();
+
+        try {
+            GarageDatabaseLogic.submitWorkOrderToDatabase(repair);
+            GarageDatabaseLogic.assignBikeToWorkOrder(repair.getVIN(), repair.getRepairID());
+            GarageDatabaseLogic.setBikeOperationalStatus(repair.getVIN(), repair.getOperationalStatus());
+            GarageController.garageMenu();
+
+        } catch (SQLException e) {
+            GarageController.garageMenu();
+        }
 
     }
 
@@ -297,10 +303,9 @@ public class GarageController {
         while (dateFormat == null) {
             try {
                 dateFormat = ValidationLogic.validateDateInput(dateInput);
-            }catch (Exception e) {
-                System.out.print("Try again, please use format(yyyy-MM-dd):");
+            } catch (ValidationLogic.InvalidDateFormatException e) {
+                System.out.print("Try again, " + e.getMessage());
                 dateInput = DefaultLogic.handleInput();
-                dateFormat = ValidationLogic.validateDateInput(dateInput);
             }
         }
         repair.setRepairDate(dateFormat);
@@ -314,9 +319,14 @@ public class GarageController {
         System.out.println("Enter a short description of the repair performed: ");
         repair.setProblemDesc(DefaultLogic.handleInput());
 
-        GarageDatabaseLogic.completeWorkOrderInDatabase(repair);
-        GarageDatabaseLogic.setBikeOperationalStatus(repair.getVIN(), repair.getOperationalStatus());
-        GarageController.garageMenu();
+        try {
+            GarageDatabaseLogic.completeWorkOrderInDatabase(repair);
+            GarageDatabaseLogic.setBikeOperationalStatus(repair.getVIN(), repair.getOperationalStatus());
+            GarageController.garageMenu();
+        } catch (SQLException e) {
+            GarageController.garageMenu();
+        }
+
     }
 
     public static void handleViewTotalWorkOrders() {
