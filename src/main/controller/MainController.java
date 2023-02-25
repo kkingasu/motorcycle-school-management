@@ -30,7 +30,7 @@ public class MainController {
                     CourseController.courseMenu();
                     break;
                 case 2: // Student
-                    System.out.print(STUDENT.MAIN_MENU);
+
                     StudentController.studentMenu();
                     break;
                 case 3: // Garage

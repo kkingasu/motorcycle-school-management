@@ -9,6 +9,6 @@ public class DefaultLogic {
     public static String handleInput(){
         String input = "";
         input = startUpApplication.scanner.nextLine();
-        return input;
+        return input.trim();
     }
 }

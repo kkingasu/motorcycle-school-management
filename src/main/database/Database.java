@@ -5,7 +5,7 @@ import java.util.Properties;
 
 public class Database {
 
-    public static Connection connectToDatabase() {
+    public static Connection connectToDatabase()  {
         // Open a connection
         Connection connection = null;
         String bitApiKey = "v2_3zDre_5SGRF56MABLK2E8SSt8CBW4";
@@ -26,6 +26,7 @@ public class Database {
                 System.out.println("Log: Success - Database connection successful");
             } else {
                 System.out.println("Log: Failed - Database connection failure. See exception below.");
+                connection.close();
             }
         } catch (Exception e) {
             e.printStackTrace();

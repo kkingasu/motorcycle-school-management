@@ -7,6 +7,8 @@ import main.ui.student.STUDENT;
 
 import java.util.Date;
 
+import static main.controller.student.StudentController.handleViewAllStudentInput;
+
 public class StudentSubMenuController {
     public static void studentEditStudentSubMenu(String studentId) {
         try {
@@ -38,18 +40,25 @@ public class StudentSubMenuController {
         }
     }
     public static void studentViewStudentSubMenu() {
+        System.out.print(STUDENT.VIEW_STUDENT);
         try {
             String input = DefaultLogic.handleInput();
             int inputConvertedToInteger = Integer.parseInt(input);
             switch (inputConvertedToInteger) {
                 case 1:
+                    System.out.print(STUDENT.VIEW_ALL_STUDENTS);
+                    handleViewAllStudentInput();
+                    break;
+                case 2:
                     System.out.print(STUDENT.STUDENT_INFORMATION);
                     handleDisplayStudentInformationInput();
                     break;
-                case 2:
+                case 3:
                     System.out.print(STUDENT.STUDENT_REPORT);
                     handleDisplayStudentReportInput();
                     break;
+                case 4:
+                    StudentController.studentMenu();
                 default:
                     // code block
             }
@@ -63,14 +72,14 @@ public class StudentSubMenuController {
         System.out.print("Enter New Student Name:");
         String name = (DefaultLogic.handleInput());
         StudentDatabaseLogic.updateStudentNameToDatabase(studentId, name);
-        MainController.initializeMainMenu();
+        StudentController.studentMenu();
     }
 
     public static void handleEditStudentAddressInput(String studentId){
         System.out.print("Enter New Student Address:");
         String address = (DefaultLogic.handleInput());
         StudentDatabaseLogic.updateStudentAddressToDatabase(studentId, address);
-        MainController.initializeMainMenu();
+        StudentController.studentMenu();
     }
     public static void handleEditStudentDobInput(String studentId){
         System.out.print("Enter New Student DOB(mm/dd/yyyy):");
@@ -87,7 +96,7 @@ public class StudentSubMenuController {
             }
         }
         StudentDatabaseLogic.updateStudentDobToDatabase(studentId, dateFormat);
-        MainController.initializeMainMenu();
+        StudentController.studentMenu();
     }
     public static Date validateDateInput(String date) {
         Date parsedDate = new Date(date);
@@ -101,7 +110,7 @@ public class StudentSubMenuController {
         System.out.print("Enter New Student Phone Number:");
         int phoneNumber = (Integer.parseInt(DefaultLogic.handleInput()));
         StudentDatabaseLogic.updateStudentPhoneNumberToDatabase(studentId, phoneNumber);
-        MainController.initializeMainMenu();
+        StudentController.studentMenu();
     }
     public static void handleDisplayStudentInformationInput(){
         System.out.print("Enter Student ID Of The Student To View:");
@@ -112,7 +121,8 @@ public class StudentSubMenuController {
        else{
            System.out.print("The Student Id That Has Been Entered Does Not Exist In The Database\n");
        }
-        MainController.initializeMainMenu();
+
+        StudentSubMenuController.studentViewStudentSubMenu();
     }
     public static void handleDisplayStudentReportInput(){
         System.out.print("Enter Student ID Of The Student Report To View:");
@@ -124,6 +134,6 @@ public class StudentSubMenuController {
             System.out.print("The Student Id That Has Been Entered Does Not Exist In The Database");
             MainController.handleInitialMainMenuInput();
         }
-        MainController.initializeMainMenu();
+        StudentSubMenuController.studentViewStudentSubMenu();
     }
 }

@@ -9,6 +9,7 @@ import java.util.Date;
 
 public class StudentController {
     public static void studentMenu() {
+        System.out.print(STUDENT.MAIN_MENU);
         String studentId;
         try {
             String input = DefaultLogic.handleInput();
@@ -28,7 +29,7 @@ public class StudentController {
                     }
                     else{
                         System.out.print("The Student Id That Has Been Entered Does Not Exist In The Database\n");
-                        MainController.initializeMainMenu();
+                        StudentController.studentMenu();
                     }
                     break;
                 case 3:
@@ -40,20 +41,15 @@ public class StudentController {
                     }
                     else{
                         System.out.print("The Student Id That Has Been Entered Does Not Exist In The Database\n");
-                        MainController.initializeMainMenu();
+                        StudentController.studentMenu();
                     }
 
                     break;
                 case 4:
-                    System.out.println(STUDENT.VIEW_STUDENT);
+
                     StudentSubMenuController.studentViewStudentSubMenu();
                     break;
                 case 5:
-                    System.out.print(STUDENT.VIEW_ALL_STUDENTS);
-                    System.out.println();
-                    handleViewAllStudentInput();
-                    break;
-                case 6:// Go back to main menu
                     MainController.initializeMainMenu();
                     break;
                 default:
@@ -89,24 +85,25 @@ public class StudentController {
         studentModel.setPhoneNumber(Integer.parseInt(DefaultLogic.handleInput()));
 
         StudentDatabaseLogic.submitCreateStudentDataToDatabase(studentModel);
-        MainController.initializeMainMenu();
+       StudentController.studentMenu();
     }
     public static Date validateDateInput(String date) {
         Date parsedDate = new Date(date);
         if (parsedDate != null) {
             return parsedDate;
         } else {
-            return null;
+            parsedDate = null;
+            return parsedDate;
         }
     }
 
     public static void handleRemoveStudentInput(String studentId){
         StudentDatabaseLogic.deleteStudentDataFromDatabase(studentId);
-        MainController.initializeMainMenu();
+        StudentController.studentMenu();
     }
     public static void handleViewAllStudentInput(){
         StudentDatabaseLogic.viewAllStudents();
-        MainController.initializeMainMenu();
+        StudentSubMenuController.studentViewStudentSubMenu();
     }
 }
 

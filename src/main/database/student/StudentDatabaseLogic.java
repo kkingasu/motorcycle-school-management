@@ -12,38 +12,44 @@ public class StudentDatabaseLogic {
     static String spacePipe = " | ";
 
     public static void submitCreateStudentDataToDatabase(StudentModel studentModel) {
-       PreparedStatement preparedStatement = null;
-       PreparedStatement preparedStatement2 = null;
-       UUID studentUUID = UUID.randomUUID();
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        UUID studentUUID = null;
         //TODO: Add logic to submit data to database, should probably make a db factory for doing different request...
         try {
-            final String query = "INSERT INTO person(person_id, name, address, dob, phone_number) VALUES (?,?,?,?,?)";
+            final String query = "INSERT INTO person(name, address, dob, phone_number) VALUES (?,?,?,?) RETURNING person_id";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setObject(1, studentUUID);
-            preparedStatement.setString(2, studentModel.getName());
-            preparedStatement.setString(3, studentModel.getAddress());
+            preparedStatement.setString(1, studentModel.getName());
+            preparedStatement.setString(2, studentModel.getAddress());
             java.sql.Date sqlDate = new java.sql.Date(studentModel.getDob().getTime());
-            preparedStatement.setDate(4, sqlDate);
-            preparedStatement.setFloat(5, studentModel.getPhoneNumber());
-
-            preparedStatement.executeUpdate();
+            preparedStatement.setDate(3, sqlDate);
+            preparedStatement.setFloat(4, studentModel.getPhoneNumber());
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                studentUUID = (UUID) rs.getObject("person_id");
+            }
             final String query2 = "INSERT INTO student(student_id) VALUES (?)";
             preparedStatement2 = connection.prepareStatement(query2);
             preparedStatement2.setObject(1, studentUUID);
             preparedStatement2.executeUpdate();
-        }catch (Exception e){
+
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Log: FAILED - Create Student : submitCreateStudentDataToDatabase().");
         } finally {
-            if (preparedStatement != null) {
-                try {
+            try {
+                if (preparedStatement != null) {
+
                     preparedStatement.close();
-                    preparedStatement2.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
                 }
+                if (preparedStatement2 != null) {
+                    preparedStatement2.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
+
         System.out.println("Submitting Student Data......");
     }
     public static void updateStudentNameToDatabase(String studentId, String name){
@@ -157,16 +163,7 @@ public class StudentDatabaseLogic {
         try {
             final String query = "DELETE FROM student WHERE student_id = ?";
             ps = connection.prepareStatement(query);
-            try {
-                ps.setObject(1, UUID.fromString(studentId));
-            }catch(IllegalArgumentException e){
-
-            }finally{
-                if(ps!= null){
-                    ps.close();
-                    return;
-                }
-            }
+            ps.setObject(1, UUID.fromString(studentId));
             ps.executeUpdate();
 
             final String query2 = "DELETE FROM person WHERE person_id = ?";
@@ -204,9 +201,7 @@ public class StudentDatabaseLogic {
         try {
             final String preparedQuery = "Select * From person JOIN student on student_id = person_id Where person_id = ?";
             ps = connection.prepareStatement(preparedQuery);
-
-                ps.setObject(1, UUID.fromString(studentId));
-
+            ps.setObject(1, UUID.fromString(studentId));
             rs = ps.executeQuery();
             if(!rs.isBeforeFirst()){
                 return false;
@@ -235,16 +230,12 @@ public class StudentDatabaseLogic {
         try {
             final String query = "SELECT student_id, name, address, dob, phone_number FROM student JOIN person ON person.person_id = student.student_id WHERE student_id = ?";
             ps = connection.prepareStatement(query);
-            try {
-                ps.setObject(1, UUID.fromString(studentId));
-            }catch(IllegalArgumentException e){
 
-            }finally{
-                if(ps!= null){
-                    ps.close();
-                    return;
-                }
-            }
+                ps.setObject(1, UUID.fromString(studentId));
+
+
+
+
             rs =  ps.executeQuery();
             if (rs != null) {
                 System.out.print(formatOutputUUID("id") + spacePipe);
@@ -292,16 +283,12 @@ public class StudentDatabaseLogic {
            // final String query = "SELECT student.student_id, person.name, course.course_id, course.name, course.type, course.date, cost, course_fee_paid, test_date, final_score, exercise_1_score, exercise_2_score, exercise_3_score, exercise_4_score, exercise_5_score FROM student JOIN person ON person.person_id = student.student_id JOIN enrollment ON enrollment.student_id = student.student_id JOIN course ON course.course_id = enrollment.course_id WHERE student.student_id = ?";
             final String query = "SELECT student.student_id, person.name, course.course_id, course.name, course.type, course_fee_paid, final_score, exercise_1_score, exercise_2_score, exercise_3_score, exercise_4_score, exercise_5_score FROM student JOIN person ON person.person_id = student.student_id JOIN enrollment ON enrollment.student_id = student.student_id JOIN course ON course.course_id = enrollment.course_id WHERE student.student_id = ?";
             ps = connection.prepareStatement(query);
-            try {
-                ps.setObject(1, UUID.fromString(studentId));
-            }catch(IllegalArgumentException e){
 
-            }finally{
-                if(ps!= null){
-                    ps.close();
-                    return;
-                }
-            }
+                ps.setObject(1, UUID.fromString(studentId));
+
+
+
+
             rs =  ps.executeQuery();
             if (rs.isBeforeFirst()) {
                 System.out.print(formatOutputUUID("id") + spacePipe);
@@ -378,9 +365,7 @@ public class StudentDatabaseLogic {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-           // final String query = "SELECT person_id, name, address, dob, phone_number FROM person";
             final String query = "SELECT student_id, name, address, dob, phone_number FROM student JOIN person ON person.person_id = student.student_id";
-
             stmt = connection.createStatement();
             rs =  stmt.executeQuery(query);
             if (rs != null) {
