@@ -1,4 +1,5 @@
 package main.database.garage;
+import main.database.SQLPrinter;
 import main.models.garage.BikeModel;
 import main.models.garage.RepairModel;
 import main.startUpApplication;
@@ -6,7 +7,6 @@ import java.sql.*;
 
 public class GarageDatabaseLogic {
 
-    static String spacePipe = " | ";
     private static Connection connection = startUpApplication.connection;
     public static void retrieveTotalAvailableBikes() {
 
@@ -17,28 +17,8 @@ public class GarageDatabaseLogic {
             final String query = "SELECT VIN,license_plate, brand_name, bike_type, CC FROM bike WHERE is_operational = TRUE";
             stmt = connection.createStatement();
             rs = stmt.executeQuery(query);
+            SQLPrinter.printResultSet(rs);
 
-            if(rs != null) {
-                System.out.print(formatOutput("VIN") + spacePipe);
-                System.out.print(formatOutput("License Plate") + spacePipe);
-                System.out.print(formatOutput("Brand Name") + spacePipe);
-                System.out.print(formatOutput("Bike Type") + spacePipe);
-                System.out.println(formatOutput("CC") + spacePipe);
-
-                while(rs.next()) {
-                    String VIN = rs.getString("VIN");
-                    String licensePlate = rs.getString("license_plate");
-                    String brandName = rs.getString("brand_name");
-                    String bikeType = rs.getString("bike_type");
-                    String CC = rs.getString("CC");
-                    System.out.print(formatOutput(VIN) + spacePipe);
-                    System.out.print(formatOutput(licensePlate) + spacePipe);
-                    System.out.print(formatOutput(brandName) + spacePipe);
-                    System.out.print(formatOutput(bikeType) + spacePipe);
-                    System.out.println(formatOutput(CC) + spacePipe);
-                }
-
-            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -69,28 +49,8 @@ public class GarageDatabaseLogic {
             final String query = "SELECT VIN,license_plate, brand_name, bike_type, CC FROM bike WHERE is_operational = TRUE AND bike_type = \"street\"";
             stmt = connection.createStatement();
             rs = stmt.executeQuery(query);
+            SQLPrinter.printResultSet(rs);
 
-            if(rs != null) {
-                System.out.print(formatOutput("VIN") + spacePipe);
-                System.out.print(formatOutput("License Plate") + spacePipe);
-                System.out.print(formatOutput("Brand Name") + spacePipe);
-                System.out.print(formatOutput("Bike Type") + spacePipe);
-                System.out.println(formatOutput("CC") + spacePipe);
-
-                while(rs.next()) {
-                    String VIN = rs.getString("VIN");
-                    String licensePlate = rs.getString("license_plate");
-                    String brandName = rs.getString("brand_name");
-                    String bikeType = rs.getString("bike_type");
-                    String CC = rs.getString("CC");
-                    System.out.print(formatOutput(VIN) + spacePipe);
-                    System.out.print(formatOutput(licensePlate) + spacePipe);
-                    System.out.print(formatOutput(brandName) + spacePipe);
-                    System.out.print(formatOutput(bikeType) + spacePipe);
-                    System.out.println(formatOutput(CC) + spacePipe);
-                }
-
-            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -121,27 +81,8 @@ public class GarageDatabaseLogic {
             final String query = "SELECT VIN,license_plate, brand_name, bike_type, CC FROM bike WHERE is_operational = TRUE AND bike_type = \"dirt\"";
             stmt = connection.createStatement();
             rs = stmt.executeQuery(query);
+            SQLPrinter.printResultSet(rs);
 
-            if(rs != null) {
-                System.out.print(formatOutput("VIN") + spacePipe);
-                System.out.print(formatOutput("License Plate") + spacePipe);
-                System.out.print(formatOutput("Brand Name") + spacePipe);
-                System.out.print(formatOutput("Bike Type") + spacePipe);
-                System.out.println(formatOutput("CC") + spacePipe);
-
-                while(rs.next()) {
-                    String VIN = rs.getString("VIN");
-                    String licensePlate = rs.getString("license_plate");
-                    String brandName = rs.getString("brand_name");
-                    String bikeType = rs.getString("bike_type");
-                    String CC = rs.getString("CC");
-                    System.out.print(formatOutput(VIN) + spacePipe);
-                    System.out.print(formatOutput(licensePlate) + spacePipe);
-                    System.out.print(formatOutput(brandName) + spacePipe);
-                    System.out.print(formatOutput(bikeType) + spacePipe);
-                    System.out.println(formatOutput(CC) + spacePipe);
-                }
-            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -498,21 +439,8 @@ public class GarageDatabaseLogic {
             final String query = "SELECT repair_id,problem_date,problem_desc FROM repair WHERE repair_date IS NULL";
             stmt = connection.createStatement();
             rs = stmt.executeQuery(query);
+            SQLPrinter.printResultSet(rs);
 
-            if(rs != null) {
-                System.out.print(formatOutput("Work Order Number") + spacePipe);
-                System.out.print(formatOutput("Problem Date") + spacePipe);
-                System.out.println(formatOutput("Description") + spacePipe);
-
-                while(rs.next()) {
-                    String repairID = rs.getString("repair_id");
-                    String problemDate = rs.getString("problem_date");
-                    String problemDesc = rs.getString("problem_desc");
-                    System.out.print(formatOutput(repairID) + spacePipe);
-                    System.out.print(formatOutput(problemDate) + spacePipe);
-                    System.out.println(formatOutput(problemDesc) + spacePipe);
-                }
-            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -544,27 +472,8 @@ public class GarageDatabaseLogic {
             final String query = "SELECT * FROM repair WHERE repair_date IS NOT NULL";
             stmt = connection.createStatement();
             rs = stmt.executeQuery(query);
+            SQLPrinter.printResultSet(rs);
 
-            if(rs != null) {
-                System.out.print(formatOutput("Work Order Number") + spacePipe);
-                System.out.print(formatOutput("Problem Date") + spacePipe);
-                System.out.print(formatOutput("Repair Date") + spacePipe);
-                System.out.print(formatOutput("Description") + spacePipe);
-                System.out.println(formatOutput("Repair Cost") + spacePipe);
-
-                while(rs.next()) {
-                    String repairID = rs.getString("repair_id");
-                    String problemDate = rs.getString("problem_date");
-                    String repairDate = rs.getString("repair_date");
-                    String problemDesc = rs.getString("problem_desc");
-                    String repairCost = rs.getString("repair_cost");
-                    System.out.print(formatOutput(repairID) + spacePipe);
-                    System.out.print(formatOutput(problemDate) + spacePipe);
-                    System.out.print(formatOutput(repairDate) + spacePipe);
-                    System.out.print(formatOutput(problemDesc) + spacePipe);
-                    System.out.println(formatOutput(repairCost) + spacePipe);
-                }
-            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -597,27 +506,8 @@ public class GarageDatabaseLogic {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,VIN);
             rs = preparedStatement.executeQuery();
-            if(rs != null) {
-                System.out.print(formatOutput("Work Order Number") + spacePipe);
-                System.out.print(formatOutput("Problem Date") + spacePipe);
-                System.out.print(formatOutput("Repair Date") + spacePipe);
-                System.out.print(formatOutput("Description") + spacePipe);
-                System.out.println(formatOutput("Repair Cost") + spacePipe);
+            SQLPrinter.printResultSet(rs);
 
-                while(rs.next()) {
-                    String repairID = rs.getString("repair_id");
-                    String problemDate = rs.getString("problem_date");
-                    String repairDate = rs.getString("repair_date");
-                    String problemDesc = rs.getString("problem_desc");
-                    String repairCost = rs.getString("repair_cost");
-                    System.out.print(formatOutput(repairID) + spacePipe);
-                    System.out.print(formatOutput(problemDate) + spacePipe);
-                    System.out.print(formatOutput(repairDate) + spacePipe);
-                    System.out.print(formatOutput(problemDesc) + spacePipe);
-                    System.out.println(formatOutput(repairCost) + spacePipe);
-                }
-
-            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -638,11 +528,6 @@ public class GarageDatabaseLogic {
             }
         }
 
-    }
-
-    public static String formatOutput(String output) {
-        String indent = "                  "; // 20 spaces
-        return output += indent.substring(0, indent.length() - output.length());
     }
 
 }
