@@ -7,7 +7,13 @@ import java.text.SimpleDateFormat;
 
 public class ValidationLogic {
 
-    public static Date validateDateInput(String date) {
+    public static class InvalidDateFormatException extends Exception {
+        public InvalidDateFormatException(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+
+    public static Date validateDateInput(String date) throws InvalidDateFormatException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
 
@@ -15,7 +21,7 @@ public class ValidationLogic {
             java.util.Date utilDate = dateFormat.parse(date);
             return new java.sql.Date(utilDate.getTime());
         } catch (ParseException e) {
-            return null;
+            throw new InvalidDateFormatException("Invalid date format. Please use the format yyyy-MM-dd:");
         }
     }
 }
