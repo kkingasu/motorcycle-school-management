@@ -21,8 +21,7 @@ public class Database {
         props.setProperty("password", bitApiKey);
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager
-                    .getConnection(connectionURL, props);
+            connection = DriverManager.getConnection(connectionURL, props);
             if(connection != null) {
                 System.out.println("Log: Success - Database connection successful");
             } else {
