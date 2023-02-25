@@ -20,8 +20,9 @@ public class CourseController {
                     System.out.println(COURSE.CREATE_COURSE);
                     // Initialize create course input
                     handleCreateCourseInput();
+
                     break;
-                case 2: // Assign Teacher
+                case 2: // Enerollments Teacher
                     break;
                 case 3: // Assign Range
                     break;
