@@ -22,7 +22,6 @@ public class StudentSubMenuController {
                 case 2:
                     System.out.print(STUDENT.EDIT_ADDRESS);
                     handleEditStudentAddressInput(studentId);
-
                     break;
                 case 3:
                     System.out.print(STUDENT.EDIT_DOB);
