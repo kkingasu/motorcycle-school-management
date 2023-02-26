@@ -191,7 +191,7 @@ public class GarageController {
         System.out.print("Enter VIN Number: ");
         int VIN = Integer.parseInt(DefaultLogic.handleInput());
         System.out.print("Enter Course ID: ");
-        int courseID = Integer.parseInt(DefaultLogic.handleInput());
+        String courseID = DefaultLogic.handleInput();
 
         GarageDatabaseLogic.assignBikeToCourse(VIN, courseID);
         GarageController.garageMenu();
@@ -201,7 +201,7 @@ public class GarageController {
         System.out.print("Enter VIN Number: ");
         int VIN = Integer.parseInt(DefaultLogic.handleInput());
         System.out.print("Enter Course ID: ");
-        int courseID = Integer.parseInt(DefaultLogic.handleInput());
+        String courseID = DefaultLogic.handleInput();
 
         GarageDatabaseLogic.removeBikeFromCourse(VIN, courseID);
         GarageController.garageMenu();
