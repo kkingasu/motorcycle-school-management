@@ -108,7 +108,7 @@ public class GarageDatabaseLogic {
 
     }
 
-    public static void assignBikeToCourse(int VIN, String courseID) {
+    public static void assignBikeToCourse(String VIN, String courseID) {
 
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement2 = null;
@@ -117,13 +117,17 @@ public class GarageDatabaseLogic {
             connection.setAutoCommit(false);
             final String query = "INSERT INTO bike_assignment VALUES(?,?)";
             preparedStatement = connection.prepareStatement(query);
+            //preparedStatement.setInt(1,courseID);
             preparedStatement.setObject(1, UUID.fromString(courseID));
-            preparedStatement.setInt(2,VIN);
+            //preparedStatement.setInt(2,VIN);
+            preparedStatement.setObject(2, UUID.fromString(VIN));
             preparedStatement.executeUpdate();
             final String query2 = "INSERT INTO bike_assignment_history VALUES(?,?)";
             preparedStatement2 = connection.prepareStatement(query2);
+            //preparedStatement2.setInt(1,courseID);
             preparedStatement2.setObject(1, UUID.fromString(courseID));
-            preparedStatement2.setInt(2, VIN);
+            //preparedStatement2.setInt(2, VIN);
+            preparedStatement2.setObject(2, UUID.fromString(VIN));
             preparedStatement2.executeUpdate();
 
             connection.commit();
@@ -157,7 +161,7 @@ public class GarageDatabaseLogic {
 
     }
 
-    public static void removeBikeFromCourse(int VIN, String courseID) {
+    public static void removeBikeFromCourse(String VIN, String courseID) {
 
         PreparedStatement preparedStatement = null;
 
@@ -165,7 +169,8 @@ public class GarageDatabaseLogic {
             connection.setAutoCommit(false);
             final String query = "DELETE FROM bike_assignment WHERE bike_VIN = ? AND course_id = ?";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, VIN);
+            //preparedStatement.setInt(1, VIN);
+            preparedStatement.setObject(1,UUID.fromString(VIN));
             preparedStatement.setObject(2,UUID.fromString(courseID));
             preparedStatement.executeUpdate();
             connection.commit();
@@ -202,19 +207,19 @@ public class GarageDatabaseLogic {
 
         try {
             connection.setAutoCommit(false);
-            final String query = "INSERT INTO bike VALUES (?,?,?,?,?,?)";
+            final String query = "INSERT INTO bike(license_plate,brand_name, is_operational, bike_type, cc) VALUES (?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setObject(1, bike.getVIN());
-            preparedStatement.setInt(2, bike.getLicensePlate());
-            preparedStatement.setString(3, bike.getBrandName());
-            preparedStatement.setBoolean(4, bike.getIsOperational());
-            preparedStatement.setString(5, bike.getBikeType());
-            preparedStatement.setInt(6, bike.getCC());
+            //preparedStatement.setObject(1, bike.getVIN());
+            preparedStatement.setInt(1, bike.getLicensePlate());
+            preparedStatement.setString(2, bike.getBrandName());
+            preparedStatement.setBoolean(3, bike.getIsOperational());
+            preparedStatement.setString(4, bike.getBikeType());
+            preparedStatement.setInt(5, bike.getCC());
             preparedStatement.executeUpdate();
             connection.commit();
 
         } catch (SQLException e) {
-            System.out.println("Failed to Add Bike: " + bike.getVIN() + " to Garage");
+            System.out.println("Failed to Add Bike to Garage");
             System.out.println(e.getMessage());
             try {
                 if (connection != null) {
@@ -235,11 +240,11 @@ public class GarageDatabaseLogic {
                 System.out.println(ex.getMessage());
             }
         }
-        System.out.println("Successfully Added Bike: " + bike.getVIN() + " to Garage");
+        System.out.println("Successfully Added Bike to Garage");
 
     }
 
-    public static void removeBikeFromDatabase(int VIN) {
+    public static void removeBikeFromDatabase(String VIN) {
 
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement2 = null;
@@ -248,11 +253,13 @@ public class GarageDatabaseLogic {
             connection.setAutoCommit(false);
             final String query = "DELETE FROM bike_assignment_history WHERE bike_VIN =?";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, VIN);
+            //preparedStatement.setInt(1, VIN);
+            preparedStatement.setObject(1,UUID.fromString(VIN));
             preparedStatement.executeUpdate();
             final String query2 = "DELETE FROM bike WHERE VIN =?";
             preparedStatement2 = connection.prepareStatement(query2);
-            preparedStatement2.setInt(1, VIN);
+            //preparedStatement2.setInt(1, VIN);
+            preparedStatement2.setObject(1,UUID.fromString(VIN));
             preparedStatement2.executeUpdate();
             connection.commit();
 
@@ -290,6 +297,8 @@ public class GarageDatabaseLogic {
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement2 = null;
         PreparedStatement preparedStatement3 = null;
+        UUID repairID = null;
+        ResultSet rs = null;
 
         //For displaying bike status
         String operationalStatus;
@@ -300,27 +309,35 @@ public class GarageDatabaseLogic {
 
         try {
             connection.setAutoCommit(false);
-            final String query = "INSERT INTO repair VALUES (?,?, NULL,?, NULL)";
+            final String query = "INSERT INTO repair(problem_date, repair_date, problem_desc, repair_cost ) VALUES (?, NULL,?, NULL) RETURNING repair_id";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, repair.getRepairID());
-            preparedStatement.setDate(2, (Date) repair.getProblemDate());
-            preparedStatement.setString(3, repair.getProblemDesc());
-            preparedStatement.executeUpdate();
+            //preparedStatement.setInt(1, repair.getRepairID());
+            preparedStatement.setDate(1, (Date) repair.getProblemDate());
+            preparedStatement.setString(2, repair.getProblemDesc());
+            rs = preparedStatement.executeQuery();
+
+            if(rs.next()) {
+                repairID = (UUID) rs.getObject("repair_id");
+            }
+
             final String query2 = "INSERT INTO manages_repair VALUES (?,?)";
             preparedStatement2 = connection.prepareStatement(query2);
-            preparedStatement2.setInt(1, repair.getVIN());
-            preparedStatement2.setInt(2, repair.getRepairID());
+            //preparedStatement2.setInt(1, repair.getVIN());
+            preparedStatement2.setObject(1,UUID.fromString(repair.getVIN()));
+            //preparedStatement2.setInt(2, repair.getRepairID());
+            preparedStatement2.setObject(2,repairID);
             preparedStatement2.executeUpdate();
             final String query3 = "UPDATE bike SET is_operational = ? WHERE VIN = ?";
             preparedStatement3 = connection.prepareStatement(query3);
             preparedStatement3.setBoolean(1, repair.getOperationalStatus());
-            preparedStatement3.setInt(2, repair.getVIN());
+            //preparedStatement3.setInt(2, repair.getVIN());
+            preparedStatement3.setObject(2,UUID.fromString(repair.getVIN()));
             preparedStatement3.executeUpdate();
 
             connection.commit();
 
         } catch (SQLException e) {
-            System.out.println("Failed to Create Work Order: " + repair.getRepairID());
+            System.out.println("Failed to Create Work Order: " + repairID);
             System.out.println(e.getMessage());
             try {
                 if (connection != null) {
@@ -347,7 +364,7 @@ public class GarageDatabaseLogic {
                 System.out.println(ex.getMessage());
             }
         }
-        System.out.println("Successfully Created Work Order: " + repair.getRepairID());
+        System.out.println("Successfully Created Work Order: " + repairID);
         System.out.println("Bike: " + repair.getVIN() + " is now " + operationalStatus);
     }
 
@@ -370,12 +387,14 @@ public class GarageDatabaseLogic {
             preparedStatement.setDate(1, (Date) repair.getRepairDate());
             preparedStatement.setFloat(2, repair.getRepairCost());
             preparedStatement.setString(3, repair.getProblemDesc());
-            preparedStatement.setInt(4,repair.getRepairID());
+            //preparedStatement.setInt(4,repair.getRepairID());
+            preparedStatement.setObject(4,UUID.fromString(repair.getRepairID()));
             preparedStatement.executeUpdate();
             final String query2 = "UPDATE bike SET is_operational = ? WHERE VIN = ?";
             preparedStatement2 = connection.prepareStatement(query2);
             preparedStatement2.setBoolean(1, repair.getOperationalStatus());
-            preparedStatement2.setInt(2, repair.getVIN());
+            //preparedStatement2.setInt(2, repair.getVIN());
+            preparedStatement2.setObject(2,UUID.fromString(repair.getVIN()));
             preparedStatement2.executeUpdate();
 
             connection.commit();
@@ -417,7 +436,7 @@ public class GarageDatabaseLogic {
         try {
             final String query = "SELECT repair_id,problem_date,problem_desc FROM repair WHERE repair_date IS NULL";
             stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            rs = stmt.executeQuery(query);
+            rs = stmt.executeQuery();
             SQLPrinter.printResultSet(rs);
 
         } catch (Exception e) {
@@ -450,7 +469,7 @@ public class GarageDatabaseLogic {
         try {
             final String query = "SELECT * FROM repair WHERE repair_date IS NOT NULL";
             stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            rs = stmt.executeQuery(query);
+            rs = stmt.executeQuery();
             SQLPrinter.printResultSet(rs);
 
         } catch (Exception e) {
@@ -475,7 +494,7 @@ public class GarageDatabaseLogic {
 
     }
 
-    public static void retrieveBikeWorkOrders(int VIN) {
+    public static void retrieveBikeWorkOrders(String VIN) {
 
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement2 = null;
@@ -485,13 +504,14 @@ public class GarageDatabaseLogic {
         try {
             final String query = "SELECT repair.repair_id,repair.problem_date,repair.repair_date,repair.problem_desc,repair.repair_cost,manages_repair.bike_VIN FROM repair INNER JOIN manages_repair ON repair.repair_id = manages_repair.repair_id WHERE manages_repair.bike_VIN = ? AND repair.repair_date IS NOT NULL";
             preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            preparedStatement.setInt(1,VIN);
+            //preparedStatement.setInt(1,VIN);
+            preparedStatement.setObject(1,UUID.fromString(VIN));
             rs = preparedStatement.executeQuery();
             SQLPrinter.printResultSet(rs);
             System.out.println(GARAGE.INDIVIDUAL_BIKE_COURSE_HISTORY);
             final String query2 = "SELECT course_id FROM bike_assignment_history WHERE bike_VIN = ?";
             preparedStatement2 = connection.prepareStatement(query2, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            preparedStatement2.setInt(1, VIN);
+            preparedStatement2.setObject(1,UUID.fromString(VIN));
             rs2 = preparedStatement2.executeQuery();
             SQLPrinter.printResultSet(rs2);
 

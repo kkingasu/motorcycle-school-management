@@ -5,27 +5,27 @@ import java.util.Date;
 ;
 public class RepairModel {
 
-    int repairID;
-    int VIN;
+    String repairID;
+    String VIN;
     Date problemDate;
     Date repairDate;
     String problemDesc;
     boolean isOperational;
     float repairCost;
 
-    public void setRepairID(int repairID) {
+    public void setRepairID(String repairID) {
         this.repairID = repairID;
     }
 
-    public int getRepairID() {
+    public String getRepairID() {
         return this.repairID;
     }
 
-    public void setVIN(int VIN) {
+    public void setVIN(String VIN) {
         this.VIN = VIN;
     }
 
-    public int getVIN() {
+    public String getVIN() {
         return this.VIN;
     }
 

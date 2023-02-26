@@ -189,8 +189,10 @@ public class GarageController {
     //================================HANDLERS================================
     public static void handleAssignBikeToCourse() {
         System.out.print("Enter VIN Number: ");
-        int VIN = Integer.parseInt(DefaultLogic.handleInput());
+        //int VIN = Integer.parseInt(DefaultLogic.handleInput());
+        String VIN = DefaultLogic.handleInput();
         System.out.print("Enter Course ID: ");
+        //int courseID = Integer.parseInt(DefaultLogic.handleInput());
         String courseID = DefaultLogic.handleInput();
 
         GarageDatabaseLogic.assignBikeToCourse(VIN, courseID);
@@ -199,8 +201,10 @@ public class GarageController {
 
     public static void handleRemoveBikeFromCourse() {
         System.out.print("Enter VIN Number: ");
-        int VIN = Integer.parseInt(DefaultLogic.handleInput());
+        //int VIN = Integer.parseInt(DefaultLogic.handleInput());
+        String VIN = DefaultLogic.handleInput();
         System.out.print("Enter Course ID: ");
+        //int courseID = Integer.parseInt(DefaultLogic.handleInput());
         String courseID = DefaultLogic.handleInput();
 
         GarageDatabaseLogic.removeBikeFromCourse(VIN, courseID);
@@ -212,8 +216,8 @@ public class GarageController {
 
         System.out.print("Enter License Plate Number: ");
         bike.setLicensePlate(Integer.parseInt(DefaultLogic.handleInput()));
-        System.out.print("Enter VIN Number: ");
-        bike.setVIN(Integer.parseInt(DefaultLogic.handleInput()));
+        //System.out.print("Enter VIN Number: ");
+        //bike.setVIN(Integer.parseInt(DefaultLogic.handleInput()));
         System.out.print("Enter Brand Name: ");
         bike.setBrandName(DefaultLogic.handleInput());
         System.out.print("Enter CC: ");
@@ -229,7 +233,8 @@ public class GarageController {
 
     public static void handleRemoveBikeFromGarage() {
         System.out.print("Enter VIN of Bike to Remove: ");
-        int VIN = Integer.parseInt(DefaultLogic.handleInput());
+        //int VIN = Integer.parseInt(DefaultLogic.handleInput());
+        String VIN = DefaultLogic.handleInput();
 
         GarageDatabaseLogic.removeBikeFromDatabase(VIN);
         GarageController.garageMenu();
@@ -254,9 +259,10 @@ public class GarageController {
         RepairModel repair = new RepairModel();
 
         System.out.print("Enter VIN: ");
-        repair.setVIN(Integer.parseInt(DefaultLogic.handleInput()));
-        System.out.print("Enter Work Order Number: ");
-        repair.setRepairID(Integer.parseInt(DefaultLogic.handleInput()));
+        //repair.setVIN(Integer.parseInt(DefaultLogic.handleInput()));
+        repair.setVIN(DefaultLogic.handleInput());
+        //System.out.print("Enter Work Order Number: ");
+        //repair.setRepairID(Integer.parseInt(DefaultLogic.handleInput()));
 
         System.out.print("Enter Problem Date(yyyy-MM-dd): ");
         String dateInput = DefaultLogic.handleInput();
@@ -286,7 +292,8 @@ public class GarageController {
         RepairModel repair = new RepairModel();
 
         System.out.print("Enter the Work Order Number: ");
-        repair.setRepairID(Integer.parseInt(DefaultLogic.handleInput()));
+        //repair.setRepairID(Integer.parseInt(DefaultLogic.handleInput()));
+        repair.setRepairID(DefaultLogic.handleInput());
 
         System.out.print("Enter the Repair Date(yyyy-MM-dd): ");
         String dateInput = DefaultLogic.handleInput();
@@ -303,11 +310,14 @@ public class GarageController {
         repair.setRepairDate(dateFormat);
 
         System.out.print("Enter the VIN: ");
-        repair.setVIN(Integer.parseInt(DefaultLogic.handleInput()));
+        //repair.setVIN(Integer.parseInt(DefaultLogic.handleInput()));
+        repair.setVIN(DefaultLogic.handleInput());
         System.out.print("Is the Bike Fixed? (True or False): ");
         repair.setOperationalStatus(Boolean.parseBoolean(DefaultLogic.handleInput()));
         System.out.println("Enter the repair cost: ");
-        repair.setRepairCost(Float.parseFloat(DefaultLogic.handleInput()));
+        float cost = Float.parseFloat(DefaultLogic.handleInput());
+        String formattedCost = String.format("%.2f", cost);
+        repair.setRepairCost(Float.parseFloat(formattedCost));
         System.out.println("Enter a short description of the repair performed: ");
         repair.setProblemDesc(DefaultLogic.handleInput());
 
@@ -328,7 +338,8 @@ public class GarageController {
 
     public static void handleIndividualBikeReport() {
         System.out.print("Enter the VIN of the Bike for the Work Order Report: ");
-        int VIN = Integer.parseInt(DefaultLogic.handleInput());
+        //int VIN = Integer.parseInt(DefaultLogic.handleInput());
+        String VIN = DefaultLogic.handleInput();
 
         GarageDatabaseLogic.retrieveBikeWorkOrders(VIN);
         GarageController.garageMenu();
