@@ -5,53 +5,61 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 public class SQLPrinter {
     public static void printResultSet(ResultSet rs) throws SQLException {
+        // Get metadata for ResultSet
         ResultSetMetaData rsmd = rs.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
-        int[] columnWidths = new int[columnsNumber];
+        int numColumns = rsmd.getColumnCount();
+        int[] columnWidths = new int[numColumns];
 
-        // Get column widths
-        for (int i = 1; i <= columnsNumber; i++) {
+        // Get maximum width of each column based on column name and values
+        for (int i = 1; i <= numColumns; i++) {
             String columnName = rsmd.getColumnName(i);
-            columnWidths[i - 1] = Math.max(columnName.length(), 10);
-            for (int j = 1; j <= rs.getRow(); j++) {
-                rs.absolute(j);
-                String columnValue = rs.getString(i);
-                columnWidths[i - 1] = Math.max(columnWidths[i - 1], columnValue.length());
+            columnWidths[i-1] = columnName.length();
+            rs.beforeFirst();
+            while (rs.next()) {
+                Object value = rs.getObject(i);
+                if (value != null) {
+                    int width = value.toString().length();
+                    if (width > columnWidths[i-1]) {
+                        columnWidths[i-1] = width;
+                    }
+                }
             }
         }
 
-        // Print column headers
-        for (int i = 1; i <= columnsNumber; i++) {
+        // Print table header
+        for (int i = 1; i <= numColumns; i++) {
             String columnName = rsmd.getColumnName(i);
-            System.out.printf("%-" + columnWidths[i - 1] + "s", columnName);
-            if (i != columnsNumber) {
+            System.out.print(String.format("%-" + columnWidths[i-1] + "s", columnName));
+            if (i < numColumns) {
                 System.out.print(" | ");
             }
         }
         System.out.println();
 
-        // Print separator
-        for (int i = 1; i <= columnsNumber; i++) {
-            for (int j = 0; j < columnWidths[i - 1]; j++) {
-                System.out.print("-");
+        // Print separator row
+        for (int i = 1; i <= numColumns; i++) {
+            String separator = "-";
+            for (int j = 1; j <= columnWidths[i-1]; j++) {
+                separator += "-";
             }
-            if (i != columnsNumber) {
+            System.out.print(separator);
+            if (i < numColumns) {
                 System.out.print("-+-");
             }
         }
         System.out.println();
 
-        // Print rows
+        // Print table data
+        rs.beforeFirst();
         while (rs.next()) {
-            for (int i = 1; i <= columnsNumber; i++) {
-                String columnValue = rs.getString(i);
-                System.out.printf("%-" + columnWidths[i - 1] + "s", columnValue);
-                if (i != columnsNumber) {
+            for (int i = 1; i <= numColumns; i++) {
+                Object value = rs.getObject(i);
+                System.out.print(String.format("%-" + columnWidths[i-1] + "s", (value != null ? value.toString() : "")));
+                if (i < numColumns) {
                     System.out.print(" | ");
                 }
             }
             System.out.println();
         }
-        System.out.println("\n====================================================================");
     }
 }

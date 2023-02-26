@@ -10,12 +10,12 @@ public class GarageDatabaseLogic {
     private static Connection connection = startUpApplication.connection;
     public static void retrieveTotalAvailableBikes() {
 
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
             final String query = "SELECT VIN,license_plate, brand_name, bike_type, CC FROM bike WHERE is_operational = TRUE";
-            stmt = connection.createStatement();
+            stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             rs = stmt.executeQuery(query);
             SQLPrinter.printResultSet(rs);
 
@@ -42,12 +42,12 @@ public class GarageDatabaseLogic {
 
     public static void retrieveAvailableStreetBikes() {
 
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
             final String query = "SELECT VIN,license_plate, brand_name, bike_type, CC FROM bike WHERE is_operational = TRUE AND bike_type = \"street\"";
-            stmt = connection.createStatement();
+            stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             rs = stmt.executeQuery(query);
             SQLPrinter.printResultSet(rs);
 
@@ -74,12 +74,12 @@ public class GarageDatabaseLogic {
 
     public static void retrieveAvailableDirtBikes() {
 
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
             final String query = "SELECT VIN,license_plate, brand_name, bike_type, CC FROM bike WHERE is_operational = TRUE AND bike_type = \"dirt\"";
-            stmt = connection.createStatement();
+            stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             rs = stmt.executeQuery(query);
             SQLPrinter.printResultSet(rs);
 
@@ -432,12 +432,12 @@ public class GarageDatabaseLogic {
 
     public static void retrieveActiveWorkOrders() {
 
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
             final String query = "SELECT repair_id,problem_date,problem_desc FROM repair WHERE repair_date IS NULL";
-            stmt = connection.createStatement();
+            stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             rs = stmt.executeQuery(query);
             SQLPrinter.printResultSet(rs);
 
@@ -465,12 +465,12 @@ public class GarageDatabaseLogic {
 
     public static void retrieveTotalClosedWorkOrders() {
 
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
             final String query = "SELECT * FROM repair WHERE repair_date IS NOT NULL";
-            stmt = connection.createStatement();
+            stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             rs = stmt.executeQuery(query);
             SQLPrinter.printResultSet(rs);
 
@@ -502,8 +502,8 @@ public class GarageDatabaseLogic {
         ResultSet rs = null;
 
         try {
-            final String query = "SELECT * FROM repair INNER JOIN manages_repair ON repair.repair_id = manages_repair.repair_id WHERE manages_repair.bike_VIN = ? AND repair.repair_date IS NOT NULL";
-            preparedStatement = connection.prepareStatement(query);
+            final String query = "SELECT repair.repair_id,repair.problem_date,repair.repair_date,repair.problem_desc,repair.repair_cost,manages_repair.bike_VIN FROM repair INNER JOIN manages_repair ON repair.repair_id = manages_repair.repair_id WHERE manages_repair.bike_VIN = ? AND repair.repair_date IS NOT NULL";
+            preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1,VIN);
             rs = preparedStatement.executeQuery();
             SQLPrinter.printResultSet(rs);
