@@ -1,9 +1,6 @@
 package main.business_logic;
 import main.startUpApplication;
 
-import java.util.Objects;
-import java.util.Scanner;
-
 public class DefaultLogic {
 
     // This handles all user input

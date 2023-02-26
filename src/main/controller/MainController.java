@@ -46,7 +46,7 @@ public class MainController {
                     InfrastructureController.infrastructureMenu();
                     break;
                 default:
-                    // return to main menu
+                    InfrastructureController.infrastructureMenu();
             }
         }catch (Exception e) {
 

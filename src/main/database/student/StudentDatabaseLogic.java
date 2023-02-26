@@ -1,6 +1,7 @@
 package main.database.student;
 
 
+import main.database.SQLPrinter;
 import main.models.StudentModel;
 import main.startUpApplication;
 
@@ -200,7 +201,8 @@ public class StudentDatabaseLogic {
         PreparedStatement ps = null;
         try {
             final String preparedQuery = "Select * From person JOIN student on student_id = person_id Where person_id = ?";
-            ps = connection.prepareStatement(preparedQuery);
+            ps = connection.prepareStatement(preparedQuery, ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
             ps.setObject(1, UUID.fromString(studentId));
             rs = ps.executeQuery();
             if(!rs.isBeforeFirst()){
@@ -229,35 +231,13 @@ public class StudentDatabaseLogic {
         PreparedStatement ps = null;
         try {
             final String query = "SELECT student_id, name, address, dob, phone_number FROM student JOIN person ON person.person_id = student.student_id WHERE student_id = ?";
-            ps = connection.prepareStatement(query);
-
+            ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
                 ps.setObject(1, UUID.fromString(studentId));
-
-
-
 
             rs =  ps.executeQuery();
             if (rs != null) {
-                System.out.print(formatOutputUUID("id") + spacePipe);
-                System.out.print(formatOutput("Name") + spacePipe);
-                System.out.print(formatOutput("Address") + spacePipe);
-                System.out.print(formatOutput("DOB") + spacePipe);
-                System.out.println(formatOutput("Phone Number") + spacePipe);
-                System.out.println("--------------------------------------------------------------------------------------------------------");
-                while(rs.next()){
-                    String resultSetStudentId = rs.getString("student_id");
-                    String resultSetStudentName = rs.getString("name");
-                    String resultSetStudentAddress = rs.getString("address");
-                    String resultSetStudentDob = rs.getString("dob");
-                    String resultSetStudentPhoneNumber = rs.getString("phone_number");
-                    System.out.print(formatOutputUUID(resultSetStudentId) + spacePipe);
-                    System.out.print(formatOutput(resultSetStudentName) + spacePipe);
-                    System.out.print(formatOutput(resultSetStudentAddress) + spacePipe);
-                    System.out.print(formatOutput(resultSetStudentDob) + spacePipe);
-                    System.out.print(formatOutput(resultSetStudentPhoneNumber) + spacePipe);
-                    System.out.println("");
-                }
-                System.out.println("--------------------------------------------------------------------------------------------------------");
+                SQLPrinter.printResultSet(rs);
             }
         }catch (Exception e){
             System.out.println(e);
@@ -282,65 +262,13 @@ public class StudentDatabaseLogic {
         try {
            // final String query = "SELECT student.student_id, person.name, course.course_id, course.name, course.type, course.date, cost, course_fee_paid, test_date, final_score, exercise_1_score, exercise_2_score, exercise_3_score, exercise_4_score, exercise_5_score FROM student JOIN person ON person.person_id = student.student_id JOIN enrollment ON enrollment.student_id = student.student_id JOIN course ON course.course_id = enrollment.course_id WHERE student.student_id = ?";
             final String query = "SELECT student.student_id, person.name, course.course_id, course.name, course.type, course_fee_paid, final_score, exercise_1_score, exercise_2_score, exercise_3_score, exercise_4_score, exercise_5_score FROM student JOIN person ON person.person_id = student.student_id JOIN enrollment ON enrollment.student_id = student.student_id JOIN course ON course.course_id = enrollment.course_id WHERE student.student_id = ?";
-            ps = connection.prepareStatement(query);
-
+            ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
                 ps.setObject(1, UUID.fromString(studentId));
-
-
-
 
             rs =  ps.executeQuery();
             if (rs.isBeforeFirst()) {
-                System.out.print(formatOutputUUID("id") + spacePipe);
-                System.out.print(formatOutput("Name") + spacePipe);
-                System.out.print(formatOutputUUID("Course ID") + spacePipe);
-                System.out.print(formatOutputShorter("Course Name") + spacePipe);
-                System.out.print(formatOutputShorter("Course Type") + spacePipe);
-               // System.out.println(formatOutput("Course Date") + spacePipe);
-               // System.out.println(formatOutput("Course Cost") + spacePipe);
-                System.out.print(formatOutputShorter("Course Fee Paid") + spacePipe);
-               // System.out.println(formatOutput("Test Date") + spacePipe);
-                System.out.print(formatOutputShorter("Final Score") + spacePipe);
-                System.out.print(formatOutputShorter("Exercise 1 Score") + spacePipe);
-                System.out.print(formatOutputShorter("Exercise 2 Score") + spacePipe);
-                System.out.print(formatOutputShorter("Exercise 3 Score") + spacePipe);
-                System.out.print(formatOutputShorter("Exercise 4 Score") + spacePipe);
-                System.out.println(formatOutputShorter("Exercise 5 Score") + spacePipe);
-                System.out.println("--------------------------------------------------------------------------------------------------------");
-                while(rs.next()){
-                    String resultSetStudentId = rs.getString("student_id");
-                    String resultSetStudentName = rs.getString("name");
-                    String resultSetCourseId = rs.getString("course_id");
-                    String resultSetCourseName = rs.getString("name");
-                    String resultSetCourseType = rs.getString("type");
-                  //  String resultSetCourseDate = rs.getString("date");
-                  //  String resultSetCourseCost = rs.getString("cost");
-                    String resultSetCourseFeePaid = rs.getString("course_fee_paid");
-                  //  String resultSetTestDate = rs.getString("test_date");
-                    String resultSetFinalScore = rs.getString("final_score");
-                    String resultSetExercise1Score = rs.getString("exercise_1_score");
-                    String resultSetExercise2Score = rs.getString("exercise_2_score");
-                    String resultSetExercise3Score = rs.getString("exercise_3_score");
-                    String resultSetExercise4Score = rs.getString("exercise_4_score");
-                    String resultSetExercise5Score = rs.getString("exercise_5_score");
-                    System.out.print(formatOutputUUID(resultSetStudentId) + spacePipe);
-                    System.out.print(formatOutput(resultSetStudentName) + spacePipe);
-                    System.out.print(formatOutputUUID(resultSetCourseId) + spacePipe);
-                    System.out.print(formatOutputShorter(resultSetCourseName) + spacePipe);
-                    System.out.print(formatOutputShorter(resultSetCourseType) + spacePipe);
-                  //  System.out.print(formatOutput(resultSetCourseDate) + spacePipe);
-                  //  System.out.print(formatOutput(resultSetCourseCost) + spacePipe);
-                    System.out.print(formatOutputShorter(resultSetCourseFeePaid) + spacePipe);
-                   // System.out.print(formatOutput(resultSetTestDate) + spacePipe);
-                    System.out.print(formatOutputShorter(resultSetFinalScore) + spacePipe);
-                    System.out.print(formatOutputShorter(resultSetExercise1Score) + spacePipe);
-                    System.out.print(formatOutputShorter(resultSetExercise2Score) + spacePipe);
-                    System.out.print(formatOutputShorter(resultSetExercise3Score) + spacePipe);
-                    System.out.print(formatOutputShorter(resultSetExercise4Score) + spacePipe);
-                    System.out.print(formatOutputShorter(resultSetExercise5Score) + spacePipe);
-                    System.out.println("");
-                }
-                System.out.println("--------------------------------------------------------------------------------------------------------");
+                SQLPrinter.printResultSet(rs);
             }
             else{
                 System.out.println("This Student Has No Information To Show");
@@ -362,33 +290,15 @@ public class StudentDatabaseLogic {
         }
     }
     public static void viewAllStudents(){
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
             final String query = "SELECT student_id, name, address, dob, phone_number FROM student JOIN person ON person.person_id = student.student_id";
-            stmt = connection.createStatement();
-            rs =  stmt.executeQuery(query);
+            stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            rs =  stmt.executeQuery();
             if (rs != null) {
-                System.out.print(formatOutputUUID("id") + spacePipe);
-                System.out.print(formatOutput("Name") + spacePipe);
-                System.out.print(formatOutput("Address") + spacePipe);
-                System.out.print(formatOutput("DOB") + spacePipe);
-                System.out.println(formatOutput("Phone Number") + spacePipe);
-                System.out.println("--------------------------------------------------------------------------------------------------------");
-                while(rs.next()){
-                    String resultSetStudentId = rs.getString("student_id");
-                    String resultSetStudentName = rs.getString("name");
-                    String resultSetStudentAddress = rs.getString("address");
-                    String resultSetStudentDob = rs.getString("dob");
-                    String resultSetStudentPhoneNumber = rs.getString("phone_number");
-                    System.out.print(formatOutputUUID(resultSetStudentId) + spacePipe);
-                    System.out.print(formatOutput(resultSetStudentName) + spacePipe);
-                    System.out.print(formatOutput(resultSetStudentAddress) + spacePipe);
-                    System.out.print(formatOutput(resultSetStudentDob) + spacePipe);
-                    System.out.print(formatOutput(resultSetStudentPhoneNumber) + spacePipe);
-                    System.out.println("");
-                }
-                System.out.println("--------------------------------------------------------------------------------------------------------");
+                SQLPrinter.printResultSet(rs);
             }
         }catch (Exception e){
             System.out.println(e);
@@ -405,17 +315,5 @@ public class StudentDatabaseLogic {
                 throw new RuntimeException(e);
             }
         }
-    }
-    public static String formatOutputUUID(String output) {
-        String indent = "                                      "; // 40 spaces
-        return output += indent.substring(0, indent.length() - output.length());
-    }
-    public static String formatOutput(String output) {
-        String indent = "                  "; // 20 spaces
-        return output += indent.substring(0, indent.length() - output.length());
-    }
-    public static String formatOutputShorter(String output) {
-        String indent = "                "; // 16 spaces
-        return output += indent.substring(0, indent.length() - output.length());
     }
 }

@@ -1,11 +1,7 @@
 package main;
-
 import main.controller.MainController;
 import main.database.Database;
-import main.ui.MAIN;
-
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class startUpApplication {

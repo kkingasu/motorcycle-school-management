@@ -22,6 +22,7 @@ public class InfrastructureController {
                     MainController.initializeMainMenu();
                     break;
                 default:
+                    MainController.initializeMainMenu();
             }
         } catch (Exception e) {
             e.printStackTrace();

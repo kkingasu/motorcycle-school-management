@@ -102,6 +102,7 @@ public class StudentController {
         StudentController.studentMenu();
     }
     public static void handleViewAllStudentInput(){
+        System.out.print(STUDENT.VIEW_ALL_STUDENTS);
         StudentDatabaseLogic.viewAllStudents();
         StudentSubMenuController.studentViewStudentSubMenu();
     }

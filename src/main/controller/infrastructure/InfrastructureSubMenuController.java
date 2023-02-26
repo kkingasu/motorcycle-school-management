@@ -29,7 +29,8 @@ public class InfrastructureSubMenuController {
                 case 5: // Return to Infrastructure Menu
                     InfrastructureController.infrastructureMenu();
                     break;
-                default: //
+                default:
+                    InfrastructureController.infrastructureMenu();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,13 +72,13 @@ public class InfrastructureSubMenuController {
         System.out.print("Enter Classroom Availability (Y/N):");
         classroomModel.setIs_available(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
         InfrastructureDatabaseLogic.submitCreateClassroomDataToDatabase(classroomModel);
-        MainController.initializeMainMenu();
+        InfrastructureSubMenuController.infrastructureClassroomSubMenu();
     }
 
     public static void handleDisplayClassroomsInput() {
         System.out.println(INFRASTRUCTURE.DISPLAY_CLASSROOM);
         InfrastructureDatabaseLogic.submitDisplayAllClassroomDataToDatabase();
-        MainController.initializeMainMenu();
+        InfrastructureSubMenuController.infrastructureClassroomSubMenu();
     }
 
     public static void handleUpdateClassroomInput() {
@@ -88,7 +89,7 @@ public class InfrastructureSubMenuController {
         System.out.print("Enter Classroom Availability (Y/N):");
         classroomModel.setIs_available(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
         InfrastructureDatabaseLogic.submitUpdateClassroomDataToDatabase(classroomModel);
-        MainController.initializeMainMenu();
+        InfrastructureSubMenuController.infrastructureClassroomSubMenu();
     }
 
     public static void handleDeleteClassroomInput() {
@@ -97,7 +98,7 @@ public class InfrastructureSubMenuController {
         System.out.print("Enter Classroom Id:");
         classroomModel.setClassroom_id(DefaultLogic.handleInput());
         InfrastructureDatabaseLogic.submitDeleteClassroomDataToDatabase(classroomModel);
-        MainController.initializeMainMenu();
+        InfrastructureSubMenuController.infrastructureClassroomSubMenu();
     }
 
     public static void handleCreateRangeInput() {

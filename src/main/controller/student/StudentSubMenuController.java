@@ -16,22 +16,19 @@ public class StudentSubMenuController {
             int inputConvertedToInteger = Integer.parseInt(input);
             switch (inputConvertedToInteger) {
                 case 1:
-                    System.out.print(STUDENT.EDIT_NAME);
                    handleEditStudentNameInput(studentId);
                     break;
                 case 2:
-                    System.out.print(STUDENT.EDIT_ADDRESS);
                     handleEditStudentAddressInput(studentId);
                     break;
                 case 3:
-                    System.out.print(STUDENT.EDIT_DOB);
                     handleEditStudentDobInput(studentId);
                     break;
                 case 4:
-                    System.out.print(STUDENT.EDIT_PHONE_NUMBER);
                    handleEditStudentPhoneNumberInput(studentId);
                     break;
                 default:
+                    StudentController.studentMenu();
                     // code block
             }
         } catch (Exception e) {
@@ -45,29 +42,26 @@ public class StudentSubMenuController {
             int inputConvertedToInteger = Integer.parseInt(input);
             switch (inputConvertedToInteger) {
                 case 1:
-                    System.out.print(STUDENT.VIEW_ALL_STUDENTS);
                     handleViewAllStudentInput();
                     break;
                 case 2:
-                    System.out.print(STUDENT.STUDENT_INFORMATION);
                     handleDisplayStudentInformationInput();
                     break;
                 case 3:
-                    System.out.print(STUDENT.STUDENT_REPORT);
                     handleDisplayStudentReportInput();
                     break;
                 case 4:
                     StudentController.studentMenu();
                 default:
-                    // code block
+                    MainController.initializeMainMenu();
             }
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-
     public static void handleEditStudentNameInput(String studentId){
+        System.out.print(STUDENT.EDIT_NAME);
         System.out.print("Enter New Student Name:");
         String name = (DefaultLogic.handleInput());
         StudentDatabaseLogic.updateStudentNameToDatabase(studentId, name);
@@ -75,12 +69,14 @@ public class StudentSubMenuController {
     }
 
     public static void handleEditStudentAddressInput(String studentId){
+        System.out.print(STUDENT.EDIT_ADDRESS);
         System.out.print("Enter New Student Address:");
         String address = (DefaultLogic.handleInput());
         StudentDatabaseLogic.updateStudentAddressToDatabase(studentId, address);
         StudentController.studentMenu();
     }
     public static void handleEditStudentDobInput(String studentId){
+        System.out.print(STUDENT.EDIT_DOB);
         System.out.print("Enter New Student DOB(mm/dd/yyyy):");
         String dateInput = DefaultLogic.handleInput();
         // Send input to validator
@@ -106,12 +102,14 @@ public class StudentSubMenuController {
         }
     }
     public static void handleEditStudentPhoneNumberInput(String studentId){
+        System.out.print(STUDENT.EDIT_PHONE_NUMBER);
         System.out.print("Enter New Student Phone Number:");
         int phoneNumber = (Integer.parseInt(DefaultLogic.handleInput()));
         StudentDatabaseLogic.updateStudentPhoneNumberToDatabase(studentId, phoneNumber);
         StudentController.studentMenu();
     }
     public static void handleDisplayStudentInformationInput(){
+        System.out.print(STUDENT.STUDENT_INFORMATION);
         System.out.print("Enter Student ID Of The Student To View:");
         String studentId = DefaultLogic.handleInput();
        if(StudentDatabaseLogic.validateStudentExists(studentId)){
@@ -124,6 +122,7 @@ public class StudentSubMenuController {
         StudentSubMenuController.studentViewStudentSubMenu();
     }
     public static void handleDisplayStudentReportInput(){
+        System.out.print(STUDENT.STUDENT_REPORT);
         System.out.print("Enter Student ID Of The Student Report To View:");
         String studentId = DefaultLogic.handleInput();
         if(StudentDatabaseLogic.validateStudentExists(studentId)){

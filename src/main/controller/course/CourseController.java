@@ -32,7 +32,7 @@ public class CourseController {
                     MainController.initializeMainMenu();
                     break;
                 default:
-                    // code block
+                    MainController.initializeMainMenu();
             }
         }
         catch (Exception e)

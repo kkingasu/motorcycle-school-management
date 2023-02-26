@@ -32,8 +32,9 @@ public class InfrastructureDatabaseLogic {
     public static void submitDisplayAllClassroomDataToDatabase() {
         try {
             final String query =    "SELECT *  FROM classroom C";
-            final Statement stmt = connection.createStatement();
-            final ResultSet rs = stmt.executeQuery(query);
+            final PreparedStatement stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            final ResultSet rs = stmt.executeQuery();
 
             if (rs != null) {
                 SQLPrinter.printResultSet(rs);
@@ -94,8 +95,9 @@ public class InfrastructureDatabaseLogic {
     public static void submitDisplayAllRangeDataToDatabase() {
         try {
             final String query = "SELECT * FROM range";
-            final Statement stmt = connection.createStatement();
-            final ResultSet rs = stmt.executeQuery(query);
+            final PreparedStatement stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            final ResultSet rs = stmt.executeQuery();
 
             if (rs != null) {
                 SQLPrinter.printResultSet(rs);
