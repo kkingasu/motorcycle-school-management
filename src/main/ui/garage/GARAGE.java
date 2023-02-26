@@ -93,4 +93,8 @@ public class GARAGE {
     public final static String INDIVIDUAL_BIKE_REPORT = "====================================================================\n"
             + "Search For Bike Work Orders\n"
             + "====================================================================\n";
+
+    public final static String INDIVIDUAL_BIKE_COURSE_HISTORY = "====================================================================\n"
+            + "History of Courses Assigned to this Bike\n"
+            + "====================================================================\n";
 }
