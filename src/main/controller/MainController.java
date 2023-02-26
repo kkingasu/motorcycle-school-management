@@ -8,6 +8,7 @@ import main.ui.course.COURSE;
 import main.ui.student.STUDENT;
 import main.ui.infrastructure.INFRASTRUCTURE;
 import main.controller.infrastructure.InfrastructureController;
+import main.ui.staff.STAFF;
 
 public class MainController {
 
@@ -38,6 +39,7 @@ public class MainController {
                 case 3: // Garage
                     break;
                 case 4: // Staff
+                    StaffController.staffMenu();
                     break;
                 case 5: // Infrastructure
                     // print menu
