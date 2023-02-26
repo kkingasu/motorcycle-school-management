@@ -31,6 +31,9 @@ public class StudentSubMenuController {
                     System.out.print(STUDENT.EDIT_PHONE_NUMBER);
                    handleEditStudentPhoneNumberInput(studentId);
                     break;
+                case 5:
+                    StudentController.studentMenu();
+                    break;
                 default:
                     // code block
             }
