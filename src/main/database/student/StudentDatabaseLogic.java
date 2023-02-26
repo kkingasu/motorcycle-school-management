@@ -1,6 +1,8 @@
 package main.database.student;
 
 
+import main.controller.student.StudentController;
+import main.controller.student.StudentSubMenuController;
 import main.models.StudentModel;
 import main.startUpApplication;
 
@@ -195,13 +197,18 @@ public class StudentDatabaseLogic {
 
 
     public static boolean validateStudentExists(String studentId){
-
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
             final String preparedQuery = "Select * From person JOIN student on student_id = person_id Where person_id = ?";
             ps = connection.prepareStatement(preparedQuery);
-            ps.setObject(1, UUID.fromString(studentId));
+            try{
+                ps.setObject(1, UUID.fromString(studentId));
+            }catch(Exception e){
+                System.out.println("Invalid UUID format");
+                StudentController.studentMenu();
+            }
+
             rs = ps.executeQuery();
             if(!rs.isBeforeFirst()){
                 return false;
@@ -230,11 +237,12 @@ public class StudentDatabaseLogic {
         try {
             final String query = "SELECT student_id, name, address, dob, phone_number FROM student JOIN person ON person.person_id = student.student_id WHERE student_id = ?";
             ps = connection.prepareStatement(query);
-
+            try{
                 ps.setObject(1, UUID.fromString(studentId));
-
-
-
+            }catch(Exception e){
+                System.out.println("Invalid UUID format");
+                StudentSubMenuController.studentViewStudentSubMenu();
+            }
 
             rs =  ps.executeQuery();
             if (rs != null) {
@@ -283,12 +291,12 @@ public class StudentDatabaseLogic {
            // final String query = "SELECT student.student_id, person.name, course.course_id, course.name, course.type, course.date, cost, course_fee_paid, test_date, final_score, exercise_1_score, exercise_2_score, exercise_3_score, exercise_4_score, exercise_5_score FROM student JOIN person ON person.person_id = student.student_id JOIN enrollment ON enrollment.student_id = student.student_id JOIN course ON course.course_id = enrollment.course_id WHERE student.student_id = ?";
             final String query = "SELECT student.student_id, person.name, course.course_id, course.name, course.type, course_fee_paid, final_score, exercise_1_score, exercise_2_score, exercise_3_score, exercise_4_score, exercise_5_score FROM student JOIN person ON person.person_id = student.student_id JOIN enrollment ON enrollment.student_id = student.student_id JOIN course ON course.course_id = enrollment.course_id WHERE student.student_id = ?";
             ps = connection.prepareStatement(query);
-
+            try{
                 ps.setObject(1, UUID.fromString(studentId));
-
-
-
-
+            }catch(Exception e){
+                System.out.println("Invalid UUID format");
+                StudentController.studentMenu();
+            }
             rs =  ps.executeQuery();
             if (rs.isBeforeFirst()) {
                 System.out.print(formatOutputUUID("id") + spacePipe);
