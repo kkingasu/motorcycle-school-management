@@ -277,16 +277,8 @@ public class GarageController {
         System.out.print("Enter short description of the problem: ");
         repair.setProblemDesc(DefaultLogic.handleInput());
 
-
-        try {
-            GarageDatabaseLogic.submitWorkOrderToDatabase(repair);
-            GarageDatabaseLogic.assignBikeToWorkOrder(repair.getVIN(), repair.getRepairID());
-            GarageDatabaseLogic.setBikeOperationalStatus(repair.getVIN(), repair.getOperationalStatus());
-            GarageController.garageMenu();
-
-        } catch (SQLException e) {
-            GarageController.garageMenu();
-        }
+        GarageDatabaseLogic.submitWorkOrderToDatabase(repair);
+        GarageController.garageMenu();
 
     }
 
@@ -319,13 +311,8 @@ public class GarageController {
         System.out.println("Enter a short description of the repair performed: ");
         repair.setProblemDesc(DefaultLogic.handleInput());
 
-        try {
-            GarageDatabaseLogic.completeWorkOrderInDatabase(repair);
-            GarageDatabaseLogic.setBikeOperationalStatus(repair.getVIN(), repair.getOperationalStatus());
-            GarageController.garageMenu();
-        } catch (SQLException e) {
-            GarageController.garageMenu();
-        }
+        GarageDatabaseLogic.completeWorkOrderInDatabase(repair);
+        GarageController.garageMenu();
 
     }
 

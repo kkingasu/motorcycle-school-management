@@ -117,7 +117,6 @@ public class GarageDatabaseLogic {
             preparedStatement.setInt(2,VIN);
             preparedStatement.executeUpdate();
             connection.commit();
-            System.out.println("Successfully Assigned Bike: " + VIN + " to Course: "+ courseID);
 
         } catch (SQLException e) {
             System.out.println("Failed to Assign Bike: " + VIN + " to Course: "+ courseID);
@@ -141,6 +140,7 @@ public class GarageDatabaseLogic {
                 System.out.println(ex.getMessage());
             }
         }
+        System.out.println("Successfully Assigned Bike: " + VIN + " to Course: "+ courseID);
 
     }
 
@@ -156,7 +156,6 @@ public class GarageDatabaseLogic {
             preparedStatement.setInt(2,courseID);
             preparedStatement.executeUpdate();
             connection.commit();
-            System.out.println("Successfully Removed Bike: " + VIN + " from Course: "+ courseID);
 
         } catch (SQLException e) {
             System.out.println("Failed to Remove Bike: " + VIN + " from Course: "+ courseID);
@@ -180,6 +179,7 @@ public class GarageDatabaseLogic {
                 System.out.println(ex.getMessage());
             }
         }
+        System.out.println("Successfully Removed Bike: " + VIN + " from Course: "+ courseID);
 
     }
 
@@ -199,7 +199,6 @@ public class GarageDatabaseLogic {
             preparedStatement.setInt(6, bike.getCC());
             preparedStatement.executeUpdate();
             connection.commit();
-            System.out.println("Successfully Added Bike: " + bike.getVIN() + " to Garage");
 
         } catch (SQLException e) {
             System.out.println("Failed to Add Bike: " + bike.getVIN() + " to Garage");
@@ -223,6 +222,7 @@ public class GarageDatabaseLogic {
                 System.out.println(ex.getMessage());
             }
         }
+        System.out.println("Successfully Added Bike: " + bike.getVIN() + " to Garage");
 
     }
 
@@ -237,7 +237,6 @@ public class GarageDatabaseLogic {
             preparedStatement.setInt(1, VIN);
             preparedStatement.executeUpdate();
             connection.commit();
-            System.out.println("Successfully Removed Bike: " + VIN + " from Garage");
 
         } catch (SQLException e) {
             System.out.println("Failed to Remove Bike: " + VIN + " from Garage");
@@ -261,12 +260,23 @@ public class GarageDatabaseLogic {
                 System.out.println(ex.getMessage());
             }
         }
+        System.out.println("Successfully Removed Bike: " + VIN + " from Garage");
 
     }
 
-    public static void submitWorkOrderToDatabase(RepairModel repair) throws SQLException {
+    public static void submitWorkOrderToDatabase(RepairModel repair) {
 
         PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        PreparedStatement preparedStatement3 = null;
+
+        //For displaying bike status
+        String operationalStatus;
+        if(repair.getOperationalStatus())
+            operationalStatus = "Available";
+        else
+            operationalStatus = "Unavailable";
+
         try {
             connection.setAutoCommit(false);
             final String query = "INSERT INTO repair VALUES (?,?, NULL,?, NULL)";
@@ -275,8 +285,18 @@ public class GarageDatabaseLogic {
             preparedStatement.setDate(2, (Date) repair.getProblemDate());
             preparedStatement.setString(3, repair.getProblemDesc());
             preparedStatement.executeUpdate();
+            final String query2 = "INSERT INTO manages_repair VALUES (?,?)";
+            preparedStatement2 = connection.prepareStatement(query2);
+            preparedStatement2.setInt(1, repair.getVIN());
+            preparedStatement2.setInt(2, repair.getRepairID());
+            preparedStatement2.executeUpdate();
+            final String query3 = "UPDATE bike SET is_operational = ? WHERE VIN = ?";
+            preparedStatement3 = connection.prepareStatement(query3);
+            preparedStatement3.setBoolean(1, repair.getOperationalStatus());
+            preparedStatement3.setInt(2, repair.getVIN());
+            preparedStatement3.executeUpdate();
+
             connection.commit();
-            System.out.println("Successfully Created Work Order: " + repair.getRepairID());
 
         } catch (SQLException e) {
             System.out.println("Failed to Create Work Order: " + repair.getRepairID());
@@ -287,9 +307,7 @@ public class GarageDatabaseLogic {
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
-
             }
-            throw new SQLException(); //Used to stop the sequence of submitting work order data
         } finally {
             try {
                 if (connection != null) {
@@ -298,99 +316,31 @@ public class GarageDatabaseLogic {
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-
-    }
-
-    public static void assignBikeToWorkOrder(int VIN, int repairID) throws SQLException {
-
-        PreparedStatement preparedStatement = null;
-        try {
-            connection.setAutoCommit(false);
-            final String query = "INSERT INTO manages_repair VALUES (?,?)";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, VIN);
-            preparedStatement.setInt(2,repairID);
-            preparedStatement.executeUpdate();
-            connection.commit();
-            System.out.println("Successfully Tagged Bike: " + VIN + " with Work Order: " + repairID);
-
-        } catch (SQLException e) {
-            System.out.println("Failed to Tag Bike: " + VIN + " with Work Order: " + repairID);
-            System.out.println(e.getMessage());
-            try {
-                if (connection != null) {
-                    connection.rollback();
+                if (preparedStatement2 != null) {
+                    preparedStatement2.close();
                 }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-            throw new SQLException(); //Used to stop the sequence of submitting bike assignment
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.setAutoCommit(true);
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
+                if (preparedStatement3 != null) {
+                    preparedStatement3.close();
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
         }
-
+        System.out.println("Successfully Created Work Order: " + repair.getRepairID());
+        System.out.println("Bike: " + repair.getVIN() + " is now " + operationalStatus);
     }
-    public static void setBikeOperationalStatus(int VIN, boolean status) throws SQLException {
+
+    public static void completeWorkOrderInDatabase(RepairModel repair) {
 
         PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+
+        //For displaying bike status
         String operationalStatus;
-        if(status)
+        if(repair.getOperationalStatus())
             operationalStatus = "Available";
         else
             operationalStatus = "Unavailable";
-
-        try {
-            connection.setAutoCommit(false);
-            final String query = "UPDATE bike SET is_operational = ? WHERE VIN = ?";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setBoolean(1, status);
-            preparedStatement.setInt(2, VIN);
-            preparedStatement.executeUpdate();
-            connection.commit();
-            System.out.println("Bike: " + VIN + " is now " + operationalStatus);
-
-        } catch (SQLException e) {
-            System.out.println("Failed to Update Bike: " + VIN + " Operational Status to: " + operationalStatus);
-            System.out.println(e.getMessage());
-            try {
-                if (connection != null) {
-                    connection.rollback();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-            throw new SQLException(); //Used to stop the sequence of setting bike operational status
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.setAutoCommit(true);
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-
-    }
-
-    public static void completeWorkOrderInDatabase(RepairModel repair) throws SQLException {
-
-        PreparedStatement preparedStatement = null;
 
         try {
             connection.setAutoCommit(false);
@@ -401,8 +351,13 @@ public class GarageDatabaseLogic {
             preparedStatement.setString(3, repair.getProblemDesc());
             preparedStatement.setInt(4,repair.getRepairID());
             preparedStatement.executeUpdate();
+            final String query2 = "UPDATE bike SET is_operational = ? WHERE VIN = ?";
+            preparedStatement2 = connection.prepareStatement(query2);
+            preparedStatement2.setBoolean(1, repair.getOperationalStatus());
+            preparedStatement2.setInt(2, repair.getVIN());
+            preparedStatement2.executeUpdate();
+
             connection.commit();
-            System.out.println("Successfully Completed Work Order: " + repair.getRepairID());
 
         } catch (SQLException e) {
             System.out.println("Failed to Complete Work Order: " + repair.getRepairID());
@@ -414,7 +369,6 @@ public class GarageDatabaseLogic {
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
-            throw new SQLException(); //Used to stop the sequence of completing a work order
         } finally {
             try {
                 if (connection != null) {
@@ -423,11 +377,15 @@ public class GarageDatabaseLogic {
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
+                if (preparedStatement2 != null) {
+                    preparedStatement2.close();
+                }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
         }
-
+        System.out.println("Successfully Completed Work Order: " + repair.getRepairID());
+        System.out.println("Bike: " + repair.getVIN() + " is now " + operationalStatus);
     }
 
     public static void retrieveActiveWorkOrders() {
