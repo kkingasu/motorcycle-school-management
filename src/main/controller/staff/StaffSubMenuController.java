@@ -120,4 +120,28 @@ public class StaffSubMenuController {
         StaffSubMenuController.staffViewStaffSubMenu();
     }
 
+    public static void handleEditStaffClassAvailInput(String staffId){
+        System.out.print(STAFF.EDIT_CLASS_AVAIL);
+        System.out.print("Enter New Staff Classroom Availability (T/F):");
+        String classAvail = (DefaultLogic.handleInput());
+        StaffDatabaseLogic.updateStaffClassAvailToDatabase(staffId, classAvail);
+        StaffController.staffMenu();
+    }
+
+    public static void handleEditStreetAvailInput(String staffId){
+        System.out.print(STAFF.EDIT_STREET_AVAIL);
+        System.out.print("Enter New Staff Street Bike Availability (T/F):");
+        String streetAvail = (DefaultLogic.handleInput());
+        StaffDatabaseLogic.updateStaffStreetAvailToDatabase(staffId, streetAvail);
+        StaffController.staffMenu();
+    }
+
+    public static void handleEditStaffDirtAvailInput(String staffId){
+        System.out.print(STAFF.EDIT_DIRT_AVAIL);
+        System.out.print("Enter New Staff Dirt Bike Availability (T/F):");
+        String dirtAvail = (DefaultLogic.handleInput());
+        StaffDatabaseLogic.updateStaffDirtAvailToDatabase(staffId, dirtAvail);
+        StaffController.staffMenu();
+    }
+
 }

@@ -14,6 +14,7 @@ public class StaffDatabaseLogic {
     public static void submitCreateStaffDataToDatabase(StaffModel staffModel) {
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement2 = null;
+        PreparedStatement preparedStatement3 = null;
         UUID staffUUID = null;
 
         try {
@@ -32,6 +33,14 @@ public class StaffDatabaseLogic {
             preparedStatement2 = connection.prepareStatement(query2);
             preparedStatement2.setObject(1, staffUUID);
             preparedStatement2.executeUpdate();
+
+            final String query3 = "INSERT INTO staff(staff_id, can_teach_dirt_bike,can_teach_street_bike, can_teach_classroom)";
+            preparedStatement3 = connection.prepareStatement(query3);
+            preparedStatement3.setObject(1, staffUUID);
+            preparedStatement3.setObject(2, staffModel.getDirtBikeAvailability());
+            preparedStatement3.setObject(3, staffModel.getStreetBikeAvailability());
+            preparedStatement3.setObject(4, staffModel.getClassAvailability());
+            preparedStatement3.executeUpdate();
 
         } catch (Exception e) {
             System.out.println(e);
@@ -281,5 +290,13 @@ public class StaffDatabaseLogic {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public static void updateStaffClassAvailToDatabase(String staffId, String classAvail) {
+    }
+
+    public static void updateStaffStreetAvailToDatabase(String staffId, String streetAvail) {
+    }
+    public static void updateStaffDirtAvailToDatabase(String staffId, String dirtAvail) {
     }
 }
