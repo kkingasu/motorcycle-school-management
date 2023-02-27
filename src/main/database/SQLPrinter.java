@@ -3,7 +3,9 @@ package main.database;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+
 public class SQLPrinter {
+
     public static void printResultSet(ResultSet rs) throws SQLException {
         // Get metadata for ResultSet
         ResultSetMetaData rsmd = rs.getMetaData();

@@ -1,14 +1,44 @@
 package main.models;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CourseModel {
     int course_id;
     String name;
     String description;
     String Type;
-    SimpleDateFormat date;
+    Date date;
     Float cost;
+
+    int range_number;
+
+    public Boolean getRange_am() {
+        return range_am;
+    }
+
+    public void setRange_am(Boolean range_am) {
+        this.range_am = range_am;
+    }
+
+    public Boolean getRange_pm() {
+        return range_pm;
+    }
+
+    public void setRange_pm(Boolean range_pm) {
+        this.range_pm = range_pm;
+    }
+
+    Boolean range_am;
+    Boolean range_pm;
+
+
+    public int getRange_number() {
+        return range_number;
+    }
+
+    public void setRange_number(int range_number) {
+        this.range_number = range_number;
+    }
 
     public int getCourse_id() {
         return course_id;
@@ -42,11 +72,11 @@ public class CourseModel {
         Type = type;
     }
 
-    public SimpleDateFormat getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(SimpleDateFormat date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

@@ -5,8 +5,16 @@ import main.controller.course.CourseController;
 import main.controller.garage.GarageController;
 import main.ui.course.COURSE;
 import main.ui.garage.GARAGE;
+import main.controller.student.StudentController;
+import main.ui.MAIN;
+import main.controller.infrastructure.InfrastructureController;
 
 public class MainController {
+
+    public static void initializeMainMenu () {
+        System.out.print(MAIN.MAIN_MENU);
+        handleInitialMainMenuInput();
+    }
     public static void handleInitialMainMenuInput() {
 
         try {
@@ -18,12 +26,12 @@ public class MainController {
 
             switch(convertInputToInteger) {
                 case 1: // Course
-                    // print menu
-                    System.out.print(COURSE.MAIN_MENU);
                     // print menu logic
-                    CourseController.courseMenu();
+                    CourseController.coursesAndEnrollmentsMenu();
                     break;
                 case 2: // Student
+
+                    StudentController.studentMenu();
                     break;
                 case 3: // Garage
                     //print menu logic
@@ -32,9 +40,13 @@ public class MainController {
                 case 4: // Staff
                     break;
                 case 5: // Infrastructure
+                    // print menu
+
+                    // print menu logic
+                    InfrastructureController.infrastructureMenu();
                     break;
                 default:
-                    // return to main menu
+                    InfrastructureController.infrastructureMenu();
             }
         }catch (Exception e) {
 
