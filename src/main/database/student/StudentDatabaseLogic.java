@@ -222,7 +222,8 @@ public class StudentDatabaseLogic {
             if(rs!= null){
                 rs.close();
             }
-            } catch (SQLException e) {
+            } catch (Exception e) {
+                StudentSubMenuController.studentViewStudentSubMenu();
                 throw new RuntimeException(e);
             }
         }
