@@ -11,6 +11,8 @@ public class StaffModel {
     Boolean streetBikeAvailability;
     Boolean dirtBikeAvailability;
 
+
+
     public String getName() {return name;}
 
     public void setName(String name) {this.name = name;}
@@ -38,4 +40,4 @@ public class StaffModel {
     public Boolean getDirtBikeAvailability() {return dirtBikeAvailability;}
 
     public void setDirtBikeAvailability(Boolean dirtBikeAvailability) {this.dirtBikeAvailability = dirtBikeAvailability;}
-}
+

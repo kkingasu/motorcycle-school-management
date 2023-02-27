@@ -9,9 +9,11 @@ import main.database.staff.StaffDatabaseLogic;
 import main.ui.staff.STAFF;
 import main.models.StaffModel;
 
+
 import java.sql.ResultSet;
 import java.util.Date;
 import java.util.UUID;
+
 
 public class StaffController {
 
@@ -99,7 +101,6 @@ public class StaffController {
 
         System.out.print("Enter Staff Availability to coach street bikes (Y/N):");
         staffModel.setStreetBikeAvailability(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
-
         StaffDatabaseLogic.submitCreateStaffDataToDatabase(staffModel);
         StaffController.staffMenu();
     }

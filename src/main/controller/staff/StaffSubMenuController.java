@@ -6,8 +6,9 @@ import main.database.Database;
 import main.database.staff.StaffDatabaseLogic;
 import main.models.StaffModel;
 import main.ui.staff.STAFF;
-
 import java.sql.SQLException;
+import main.database.staff.StaffDatabaseLogic;
+import main.ui.staff.STAFF;
 import java.util.Date;
 
 import static main.controller.staff.StaffController.handleViewAllStaffInput;
@@ -137,9 +138,6 @@ public class StaffSubMenuController {
         System.out.print("Enter New Staff Classroom Availability (Y/N):");
         String newValue =DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()).toString();
         Database.modifyColumnByUniqueId("boolean", "staff", "can_teach_classroom", newValue, "staff_id", staffId);
-
-        // StaffModel.setClassAvailability(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
-        //StaffDatabaseLogic.updateStaffClassAvailToDatabase(staffId, StaffModel.getClassAvailability());
         StaffController.staffMenu();
     }
 
@@ -148,8 +146,7 @@ public class StaffSubMenuController {
         System.out.print("Enter New Staff Street Bike Availability (Y/N):");
         String newValue =DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()).toString();
         Database.modifyColumnByUniqueId("boolean", "staff", "can_teach_street_bike", newValue, "staff_id", staffId);
-        //StaffModel.setStreetBikeAvailability(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
-       // StaffDatabaseLogic.updateStaffStreetAvailToDatabase(staffId, StaffModel.getStreetBikeAvailability);
+
         StaffController.staffMenu();
     }
 
@@ -158,8 +155,6 @@ public class StaffSubMenuController {
         System.out.print("Enter New Staff Dirt Bike Availability (Y/N):");
         String newValue =DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()).toString();
         Database.modifyColumnByUniqueId("boolean", "staff", "can_teach_dirt_bike", newValue, "staff_id", staffId);
-        //StaffModel.setDirtBikeAvailability(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
-        //StaffDatabaseLogic.updateStaffStreetAvailToDatabase(staffId, StaffModel);
         StaffController.staffMenu();
     }
 
