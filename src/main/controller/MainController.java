@@ -2,6 +2,9 @@ package main.controller;
 
 import main.business_logic.DefaultLogic;
 import main.controller.course.CourseController;
+import main.controller.garage.GarageController;
+import main.ui.course.COURSE;
+import main.ui.garage.GARAGE;
 import main.controller.student.StudentController;
 import main.ui.MAIN;
 import main.controller.infrastructure.InfrastructureController;
@@ -31,6 +34,8 @@ public class MainController {
                     StudentController.studentMenu();
                     break;
                 case 3: // Garage
+                    //print menu logic
+                    GarageController.garageMenu();
                     break;
                 case 4: // Staff
                     break;
