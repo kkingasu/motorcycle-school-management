@@ -7,9 +7,9 @@ public class StaffModel {
     String address;
     Date dob;
     int phoneNumber;
-    boolean classAvailability;
-    boolean streetBikeAvailability;
-    boolean dirtBikeAvailability;
+    String classAvailability;
+    String streetBikeAvailability;
+    String dirtBikeAvailability;
 
     public String getName() {return name;}
 
@@ -27,15 +27,15 @@ public class StaffModel {
 
     public void setPhoneNumber(int phoneNumber) {this.phoneNumber = phoneNumber;}
 
-    public boolean getClassAvailability() {return classAvailability;}
+    public String getClassAvailability() {return classAvailability;}
 
-    public void setClassAvailability(boolean classAvailability) {this.classAvailability = classAvailability;}
+    public void setClassAvailability(String classAvailability) {this.classAvailability = classAvailability;}
 
-    public boolean getStreetBikeAvailability() {return streetBikeAvailability;}
+    public String getStreetBikeAvailability() {return streetBikeAvailability;}
 
-    public void setStreetBikeAvailability(boolean streetBikeAvailability) {this.streetBikeAvailability = streetBikeAvailability;}
+    public void setStreetBikeAvailability(String streetBikeAvailability) {this.streetBikeAvailability = streetBikeAvailability;}
 
-    public boolean getDirtBikeAvailability() {return dirtBikeAvailability;}
+    public String getDirtBikeAvailability() {return dirtBikeAvailability;}
 
-    public void setDirtBikeAvailability(boolean dirtBikeAvailability) {this.dirtBikeAvailability = dirtBikeAvailability;}
+    public void setDirtBikeAvailability(String dirtBikeAvailability) {this.dirtBikeAvailability = dirtBikeAvailability;}
 }

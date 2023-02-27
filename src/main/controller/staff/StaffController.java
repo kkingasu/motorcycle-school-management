@@ -86,6 +86,15 @@ public class StaffController {
         System.out.print("Enter Staff Phone Number:");
         staffModel.setPhoneNumber(Integer.parseInt(DefaultLogic.handleInput()));
 
+        System.out.print("Enter Staff Availability to teach in the classroom (T/F:");
+        staffModel.setClassAvailability(DefaultLogic.handleInput());
+
+        System.out.print("Enter Staff Availability to coach dirt bikes (T/F)");
+        staffModel.setDirtBikeAvailability(DefaultLogic.handleInput());
+
+        System.out.print("Enter Staff Availability to coach street bikes (T/F):");
+        staffModel.setStreetBikeAvailability(DefaultLogic.handleInput());
+
         StaffDatabaseLogic.submitCreateStaffDataToDatabase(staffModel);
         StaffController.staffMenu();
     }
