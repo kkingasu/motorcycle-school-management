@@ -4,9 +4,6 @@ import main.business_logic.DefaultLogic;
 import main.controller.course.CourseController;
 import main.controller.student.StudentController;
 import main.ui.MAIN;
-import main.ui.course.COURSE;
-import main.ui.student.STUDENT;
-import main.ui.infrastructure.INFRASTRUCTURE;
 import main.controller.infrastructure.InfrastructureController;
 
 public class MainController {
@@ -26,10 +23,8 @@ public class MainController {
 
             switch(convertInputToInteger) {
                 case 1: // Course
-                    // print menu
-                    System.out.print(COURSE.MAIN_MENU);
                     // print menu logic
-                    CourseController.courseMenu();
+                    CourseController.coursesAndEnrollmentsMenu();
                     break;
                 case 2: // Student
 
