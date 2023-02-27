@@ -39,5 +39,5 @@ public class StaffModel {
 
     public Boolean getDirtBikeAvailability() {return dirtBikeAvailability;}
 
-    public void setDirtBikeAvailability(Boolean dirtBikeAvailability) {this.dirtBikeAvailability = dirtBikeAvailability;}
+    public void setDirtBikeAvailability(Boolean dirtBikeAvailability) {this.dirtBikeAvailability = dirtBikeAvailability;}}
 
