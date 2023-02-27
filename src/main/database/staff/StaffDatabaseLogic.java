@@ -29,17 +29,13 @@ public class StaffDatabaseLogic {
             if (rs.next()) {
                 staffUUID = (UUID) rs.getObject("person_id");
             }
-            final String query2 = "INSERT INTO staff(staff_id) VALUES (?)";
-            preparedStatement2 = connection.prepareStatement(query2);
-            preparedStatement2.setObject(1, staffUUID);
-            preparedStatement2.executeUpdate();
 
-            final String query3 = "INSERT INTO staff(staff_id, can_teach_dirt_bike,can_teach_street_bike, can_teach_classroom)";
+            final String query3 = "INSERT INTO staff(staff_id, can_teach_dirt_bike,can_teach_street_bike, can_teach_classroom) VALUES (?,?,?,?)";
             preparedStatement3 = connection.prepareStatement(query3);
             preparedStatement3.setObject(1, staffUUID);
-            preparedStatement3.setObject(2, staffModel.getDirtBikeAvailability());
-            preparedStatement3.setObject(3, staffModel.getStreetBikeAvailability());
-            preparedStatement3.setObject(4, staffModel.getClassAvailability());
+            preparedStatement3.setBoolean(2, staffModel.getDirtBikeAvailability());
+            preparedStatement3.setBoolean(3, staffModel.getStreetBikeAvailability());
+            preparedStatement3.setBoolean(4, staffModel.getClassAvailability());
             preparedStatement3.executeUpdate();
 
         } catch (Exception e) {
@@ -54,13 +50,18 @@ public class StaffDatabaseLogic {
                 if (preparedStatement2 != null) {
                     preparedStatement2.close();
                 }
+                if (preparedStatement3 != null) {
+                    preparedStatement3.close();
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
 
         System.out.println("Submitting Staff Data......");
+
     }
+
     public static void updateStaffNameToDatabase(String staffId, String name){
         boolean updateFailed = false;
         PreparedStatement ps = null;
@@ -292,11 +293,15 @@ public class StaffDatabaseLogic {
         }
     }
 
-    public static void updateStaffClassAvailToDatabase(String staffId, String classAvail) {
+    public static void updateStaffClassAvailToDatabase(String staffId, Boolean classAvail) {
+
+
     }
 
-    public static void updateStaffStreetAvailToDatabase(String staffId, String streetAvail) {
+    public static void updateStaffStreetAvailToDatabase(String staffId, Boolean streetAvail) {
     }
-    public static void updateStaffDirtAvailToDatabase(String staffId, String dirtAvail) {
+    public static void updateStaffDirtAvailToDatabase(String staffId, Boolean dirtAvail) {
     }
+
+
 }
