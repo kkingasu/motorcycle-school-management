@@ -1,6 +1,8 @@
 package main.database.student;
 
 
+import main.controller.student.StudentController;
+import main.controller.student.StudentSubMenuController;
 import main.database.SQLPrinter;
 import main.models.StudentModel;
 import main.startUpApplication;
@@ -243,6 +245,7 @@ public class StudentDatabaseLogic {
             System.out.println(e);
             e.printStackTrace();
             System.out.println("VIEW STUDENT FAILED - Student ID: " +studentId +" : displayStudentInformation().");
+            StudentSubMenuController.studentViewStudentSubMenu();
         }finally {
             try {
                 if (ps != null) {
@@ -276,6 +279,7 @@ public class StudentDatabaseLogic {
         }catch (Exception e){
             System.out.println(e);
             System.out.println("VIEW STUDENT REPORT FAILED - Student ID: " +studentId +" : displayStudentReport().");
+            StudentSubMenuController.studentViewStudentSubMenu();
         }finally {
             try {
                 if (ps != null) {
