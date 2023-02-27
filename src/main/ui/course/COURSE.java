@@ -37,7 +37,7 @@ public class COURSE {
             + "Enrollment Management\n"
             + "====================================================================\n"
             + "1. Enroll Student\n"
-            + "2. Remove Student\n"
+            + "2. Un-enroll Student\n"
             + "3. Return to Courses and Enrollments Menu\n"
             + "Input a number value to select an option from above: ";
 

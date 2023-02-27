@@ -210,7 +210,7 @@ public class StudentDatabaseLogic {
             if(!rs.isBeforeFirst()){
                 return false;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Failed to Validate If Student Is In Database: validateStudentExists()");
             return false;
