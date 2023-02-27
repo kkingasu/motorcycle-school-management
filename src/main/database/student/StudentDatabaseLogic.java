@@ -1,6 +1,8 @@
 package main.database.student;
 
 
+import main.controller.student.StudentController;
+import main.controller.student.StudentSubMenuController;
 import main.database.SQLPrinter;
 import main.models.StudentModel;
 import main.startUpApplication;
@@ -208,7 +210,7 @@ public class StudentDatabaseLogic {
             if(!rs.isBeforeFirst()){
                 return false;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Failed to Validate If Student Is In Database: validateStudentExists()");
             return false;
@@ -220,7 +222,8 @@ public class StudentDatabaseLogic {
             if(rs!= null){
                 rs.close();
             }
-            } catch (SQLException e) {
+            } catch (Exception e) {
+                StudentSubMenuController.studentViewStudentSubMenu();
                 throw new RuntimeException(e);
             }
         }
@@ -243,6 +246,7 @@ public class StudentDatabaseLogic {
             System.out.println(e);
             e.printStackTrace();
             System.out.println("VIEW STUDENT FAILED - Student ID: " +studentId +" : displayStudentInformation().");
+            StudentSubMenuController.studentViewStudentSubMenu();
         }finally {
             try {
                 if (ps != null) {
@@ -276,6 +280,7 @@ public class StudentDatabaseLogic {
         }catch (Exception e){
             System.out.println(e);
             System.out.println("VIEW STUDENT REPORT FAILED - Student ID: " +studentId +" : displayStudentReport().");
+            StudentSubMenuController.studentViewStudentSubMenu();
         }finally {
             try {
                 if (ps != null) {

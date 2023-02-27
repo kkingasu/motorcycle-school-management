@@ -130,7 +130,6 @@ public class StudentSubMenuController {
         }
           else{
             System.out.print("The Student Id That Has Been Entered Does Not Exist In The Database");
-            MainController.handleInitialMainMenuInput();
         }
         StudentSubMenuController.studentViewStudentSubMenu();
     }

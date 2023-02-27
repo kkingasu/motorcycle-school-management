@@ -20,6 +20,7 @@ public class STUDENT {
             + "2. Edit Address\n"
             + "3. Edit DOB\n"
             + "4. Edit Phone Number\n"
+            + "5. Return to Student Menu\n"
             + "Input a number value to select an option from above: ";
 
 
