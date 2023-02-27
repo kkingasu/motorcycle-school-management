@@ -2,6 +2,8 @@ package main.controller;
 
 import main.business_logic.DefaultLogic;
 import main.controller.course.CourseController;
+import main.controller.infrastructure.InfrastructureController;
+import main.controller.staff.StaffController;
 import main.controller.student.StudentController;
 import main.ui.MAIN;
 import main.ui.course.COURSE;
