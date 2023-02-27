@@ -1,7 +1,6 @@
 package main.database.course;
 
 import main.controller.course.AssignmentController;
-import main.controller.course.EnrollmentController;
 import main.startUpApplication;
 
 import java.sql.Connection;
@@ -58,6 +57,7 @@ public class AssignmentDatabaseLogic {
         } catch (Exception e) {
             System.out.println("LOG: ERROR - Invalid assigning of coach please try again");
             System.out.println(e);
+            AssignmentController.assignmentMenu();
         }
     }
 
@@ -73,6 +73,7 @@ public class AssignmentDatabaseLogic {
         } catch (Exception e) {
             System.out.println("LOG: ERROR - Invalid removal of coach please try again");
             System.out.println(e);
+            AssignmentController.assignmentMenu();
         }
     }
 
@@ -120,6 +121,7 @@ public class AssignmentDatabaseLogic {
         } catch (Exception e) {
             System.out.println("LOG: ERROR - Invalid assigning of classroom-assignment please try again");
             System.out.println(e);
+            AssignmentController.assignmentMenu();
         }
     }
 
@@ -135,6 +137,7 @@ public class AssignmentDatabaseLogic {
         } catch (Exception e) {
             System.out.println("LOG: ERROR - Invalid removal of classroom-assignment please try again");
             System.out.println(e);
+            AssignmentController.assignmentMenu();
         }
     }
 }
