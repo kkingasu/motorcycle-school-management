@@ -20,9 +20,9 @@ public class STAFF {
             + "2. Edit Address\n"
             + "3. Edit DOB\n"
             + "4. Edit Phone Number\n"
-            + "5. Edit Availability to teach in the classroom"
-            + "6. Edit Availability to coach dirt bikes"
-            + "7. Edit Availability to coach street bikes"
+            + "5. Edit Availability to teach in the classroom\n"
+            + "6. Edit Availability to coach dirt bikes\n"
+            + "7. Edit Availability to coach street bikes\n"
             + "Input a number value to select an option from above: ";
 
 
