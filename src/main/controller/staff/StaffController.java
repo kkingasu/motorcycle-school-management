@@ -2,11 +2,18 @@ package main.controller.staff;
 
 import main.business_logic.DefaultLogic;
 import main.controller.MainController;
+import main.database.Database;
+import main.database.SQLPrinter;
+import main.database.infrastructure.InfrastructureDatabaseLogic;
 import main.database.staff.StaffDatabaseLogic;
 import main.ui.staff.STAFF;
 import main.models.StaffModel;
 
+
+import java.sql.ResultSet;
 import java.util.Date;
+import java.util.UUID;
+
 
 public class StaffController {
 
@@ -86,15 +93,14 @@ public class StaffController {
         System.out.print("Enter Staff Phone Number:");
         staffModel.setPhoneNumber(Integer.parseInt(DefaultLogic.handleInput()));
 
-        System.out.print("Enter Staff Availability to teach in the classroom (T/F:");
-        staffModel.setClassAvailability(DefaultLogic.handleInput());
+        System.out.print("Enter Staff Availability to teach in the classroom (Y/N):");
+        staffModel.setClassAvailability(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
 
-        System.out.print("Enter Staff Availability to coach dirt bikes (T/F)");
-        staffModel.setDirtBikeAvailability(DefaultLogic.handleInput());
+        System.out.print("Enter Staff Availability to coach dirt bikes (Y/N):");
+        staffModel.setDirtBikeAvailability(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
 
-        System.out.print("Enter Staff Availability to coach street bikes (T/F):");
-        staffModel.setStreetBikeAvailability(DefaultLogic.handleInput());
-
+        System.out.print("Enter Staff Availability to coach street bikes (Y/N):");
+        staffModel.setStreetBikeAvailability(DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()));
         StaffDatabaseLogic.submitCreateStaffDataToDatabase(staffModel);
         StaffController.staffMenu();
     }
@@ -117,4 +123,5 @@ public class StaffController {
         StaffDatabaseLogic.viewAllStaffs();
         StaffSubMenuController.staffViewStaffSubMenu();
     }
+
 }

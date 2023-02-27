@@ -2,9 +2,13 @@ package main.controller.staff;
 
 import main.business_logic.DefaultLogic;
 import main.controller.MainController;
+import main.database.Database;
+import main.database.staff.StaffDatabaseLogic;
+import main.models.StaffModel;
+import main.ui.staff.STAFF;
+import java.sql.SQLException;
 import main.database.staff.StaffDatabaseLogic;
 import main.ui.staff.STAFF;
-
 import java.util.Date;
 
 import static main.controller.staff.StaffController.handleViewAllStaffInput;
@@ -27,6 +31,15 @@ public class StaffSubMenuController {
                     break;
                 case 4:
                     handleEditStaffPhoneNumberInput(staffId);
+                    break;
+                case 5:
+                    handleEditStaffClassAvailInput(staffId);
+                    break;
+                case 6:
+                    handleEditStaffDirtAvailInput(staffId);
+                    break;
+                case 7:
+                    handleEditStreetAvailInput(staffId);
                     break;
                 default:
                     StaffController.staffMenu();
@@ -120,27 +133,28 @@ public class StaffSubMenuController {
         StaffSubMenuController.staffViewStaffSubMenu();
     }
 
-    public static void handleEditStaffClassAvailInput(String staffId){
+    public static void handleEditStaffClassAvailInput(String staffId) throws SQLException {
         System.out.print(STAFF.EDIT_CLASS_AVAIL);
-        System.out.print("Enter New Staff Classroom Availability (T/F):");
-        String classAvail = (DefaultLogic.handleInput());
-        StaffDatabaseLogic.updateStaffClassAvailToDatabase(staffId, classAvail);
+        System.out.print("Enter New Staff Classroom Availability (Y/N):");
+        String newValue =DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()).toString();
+        Database.modifyColumnByUniqueId("boolean", "staff", "can_teach_classroom", newValue, "staff_id", staffId);
         StaffController.staffMenu();
     }
 
-    public static void handleEditStreetAvailInput(String staffId){
+    public static void handleEditStreetAvailInput(String staffId) throws SQLException {
         System.out.print(STAFF.EDIT_STREET_AVAIL);
-        System.out.print("Enter New Staff Street Bike Availability (T/F):");
-        String streetAvail = (DefaultLogic.handleInput());
-        StaffDatabaseLogic.updateStaffStreetAvailToDatabase(staffId, streetAvail);
+        System.out.print("Enter New Staff Street Bike Availability (Y/N):");
+        String newValue =DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()).toString();
+        Database.modifyColumnByUniqueId("boolean", "staff", "can_teach_street_bike", newValue, "staff_id", staffId);
+
         StaffController.staffMenu();
     }
 
-    public static void handleEditStaffDirtAvailInput(String staffId){
+    public static void handleEditStaffDirtAvailInput(String staffId) throws SQLException {
         System.out.print(STAFF.EDIT_DIRT_AVAIL);
-        System.out.print("Enter New Staff Dirt Bike Availability (T/F):");
-        String dirtAvail = (DefaultLogic.handleInput());
-        StaffDatabaseLogic.updateStaffDirtAvailToDatabase(staffId, dirtAvail);
+        System.out.print("Enter New Staff Dirt Bike Availability (Y/N):");
+        String newValue =DefaultLogic.convertStringToBoolean(DefaultLogic.handleInput()).toString();
+        Database.modifyColumnByUniqueId("boolean", "staff", "can_teach_dirt_bike", newValue, "staff_id", staffId);
         StaffController.staffMenu();
     }
 
