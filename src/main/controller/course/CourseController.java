@@ -30,7 +30,7 @@ public class CourseController {
                     EnrollmentController.enrollmentMenu();
                     break;
                 case 3: // Assignments Main Menu
-                    System.out.println(COURSE.MANAGE_ASSIGNMENTS);
+                    AssignmentController.assignmentMenu();
                     break;
                 default:
                     MainController.initializeMainMenu();

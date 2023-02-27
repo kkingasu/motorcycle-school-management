@@ -43,9 +43,11 @@ public class COURSE {
     public final static String MANAGE_ASSIGNMENTS = "====================================================================\n"
             + "Assignment Management\n"
             + "====================================================================\n"
-            + "1. Assign Teacher\n"
-            + "2. Assign Coach\n"
-            + "3. Assign Classroom\n"
+            + "1. Assign Coach/Teacher\n"
+            + "2. Remove Coach/Teacher\n"
+            + "3. Assign Classroom Assignment\n"
+            + "4. Remove Classroom Assignment\n"
+            + "5. Return to Courses and Enrollments Menu\n"
             + "Input a number value to select an option from above: ";
 
     public final static String COURSE_LIST = "====================================================================\n"
