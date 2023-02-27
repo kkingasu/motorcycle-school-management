@@ -27,7 +27,7 @@ public class CourseController {
                     courseManagementMenu();
                     break;
                 case 2: // Enrollments Main Menu
-                    System.out.println(COURSE.MANAGE_ENROLLMENTS);
+                    EnrollmentController.enrollmentMenu();
                     break;
                 case 3: // Assignments Main Menu
                     System.out.println(COURSE.MANAGE_ASSIGNMENTS);
