@@ -213,11 +213,8 @@ public class GarageController {
 
     public static void handleAddNewBikeToGarage() {
         BikeModel bike = new BikeModel();
-
         System.out.print("Enter License Plate Number: ");
         bike.setLicensePlate(Integer.parseInt(DefaultLogic.handleInput()));
-        //System.out.print("Enter VIN Number: ");
-        //bike.setVIN(Integer.parseInt(DefaultLogic.handleInput()));
         System.out.print("Enter Brand Name: ");
         bike.setBrandName(DefaultLogic.handleInput());
         System.out.print("Enter CC: ");

@@ -19,7 +19,7 @@ public class GarageDatabaseLogic {
         try {
             final String query = "SELECT VIN,license_plate, brand_name, bike_type, CC FROM bike WHERE is_operational = TRUE AND VIN NOT IN (SELECT bike_VIN FROM bike_assignment)";
             stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            rs = stmt.executeQuery(query);
+            rs = stmt.executeQuery();
             SQLPrinter.printResultSet(rs);
 
         } catch (Exception e) {
@@ -122,15 +122,6 @@ public class GarageDatabaseLogic {
             //preparedStatement.setInt(2,VIN);
             preparedStatement.setObject(2, UUID.fromString(VIN));
             preparedStatement.executeUpdate();
-            final String query2 = "INSERT INTO bike_assignment_history VALUES(?,?)";
-            preparedStatement2 = connection.prepareStatement(query2);
-            //preparedStatement2.setInt(1,courseID);
-            preparedStatement2.setObject(1, UUID.fromString(courseID));
-            //preparedStatement2.setInt(2, VIN);
-            preparedStatement2.setObject(2, UUID.fromString(VIN));
-            preparedStatement2.executeUpdate();
-
-            connection.commit();
 
         } catch (SQLException e) {
             System.out.println("Failed to Assign Bike: " + VIN + " to Course: "+ courseID);
